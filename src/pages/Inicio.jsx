@@ -1,4 +1,4 @@
-function Inicio() {
+function Inicio({ setPagina }) {
   return (
     <main className="container py-5">
       {/* Presentación */}
@@ -29,7 +29,12 @@ function Inicio() {
                   Registrá y administrá los equipos del torneo.
                 </p>
 
-                <button className="btn btn-success">Gestión de Equipos</button>
+                <button
+                  className="btn btn-success"
+                  onClick={() => setPagina("equipos")}
+                >
+                  Gestión de Equipos
+                </button>
               </div>
             </div>
           </div>
@@ -43,7 +48,10 @@ function Inicio() {
                   Registrá y administrá los jugadores.
                 </p>
 
-                <button className="btn btn-primary">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setPagina("jugadores")}
+                >
                   Gestión de Jugadores
                 </button>
               </div>
@@ -59,7 +67,12 @@ function Inicio() {
                   Registrá y administrá los partidos.
                 </p>
 
-                <button className="btn btn-warning">Gestión de Partidos</button>
+                <button
+                  className="btn btn-warning"
+                  onClick={() => setPagina("partidos")}
+                >
+                  Gestión de Partidos
+                </button>
               </div>
             </div>
           </div>
