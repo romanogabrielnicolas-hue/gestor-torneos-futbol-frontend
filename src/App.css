@@ -1,184 +1,310 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* =========================
+   VARIABLES
+========================= */
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+:root {
+    --color-principal: #176b3a;
+    --color-secundario: #0f5132;
+    --color-blanco: white;
+    --color-texto: #222;
 }
 
-.hero {
-  position: relative;
+/* =========================
+   GENERAL
+========================= */
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
+body {
+    color: var(--color-texto);
 
-  .base {
-    width: 170px;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.35)
+        ),
+        url("/img/fondo-index.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-personalizada {
+    background: linear-gradient(
+        135deg,
+        #064d2c,
+        #08783d,
+        #0b5f32
+    );
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+
+    border-radius: 0 0 18px 18px;
+}
+
+/* =========================
+   LOGO DEL NAVBAR
+========================= */
+
+.logo-navbar {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.texto-logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.texto-logo-torneos {
+    color: #8cff70;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-personalizada {
+    background: linear-gradient(
+        135deg,
+        #064d2c,
+        #08783d,
+        #07552f
+    );
+
+    min-height: 110px;
+
+    border-radius: 0 0 25px 25px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.35);
+
     position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+    z-index: 10;
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
+/* Logo */
 
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+.logo-navbar {
+    width: 75px;
+    height: 75px;
+
+    object-fit: contain;
+
+    filter: drop-shadow(
+        0 3px 4px rgba(0, 0, 0, 0.4)
+    );
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
+/* Texto del logo */
 
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
+.texto-logo {
+    color: white;
 
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
+    font-size: 1.7rem;
+    font-weight: bold;
 
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+    line-height: 1;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
+.texto-logo-torneos {
+    color: #83ff68;
 
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+    font-size: 2.3rem;
+    font-weight: bold;
+
+    line-height: 1;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+/* Botones */
 
-  .logo {
-    height: 18px;
-  }
+.boton-navbar {
+    background-color: white;
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
+    color: #075c32;
 
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
+    border: none;
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    border-radius: 15px;
 
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
+    font-weight: bold;
 
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+    font-size: 1.05rem;
+
+    padding: 12px 22px;
+
+    min-width: 145px;
+
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.boton-navbar:hover {
+    background-color: #e9ffe5;
+
+    color: #064d2c;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 7px 14px rgba(0, 0, 0, 0.3);
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.boton-navbar:active {
+    transform: scale(0.97);
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* =========================
+   BIENVENIDA
+========================= */
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.bienvenida-principal {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* =========================
+   IMÁGENES
+========================= */
+
+.imagen-tarjeta {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+}
+
+.imagen-pagina {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+/* =========================
+   TARJETAS
+========================= */
+
+.tarjeta-opcion {
+    border: none;
+    border-radius: 15px;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.tarjeta-opcion:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px #ccc !important;
+}
+
+.tarjeta-equipos {
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #ffffff
+    );
+}
+
+.tarjeta-jugadores {
+    background: linear-gradient(
+        135deg,
+        #e3f2fd,
+        #ffffff
+    );
+}
+
+.tarjeta-partidos {
+    background: linear-gradient(
+        135deg,
+        #fff8e1,
+        #ffffff
+    );
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+.boton-personalizado {
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.boton-personalizado:hover {
+    transform: scale(1.03);
+}
+
+/* =========================
+   FONDOS
+========================= */
+
+.fondo-pagina {
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.35)
+        ),
+        var(--fondo);
+}
+
+.fondo-equipos {
+    --fondo: url("/img/fondoEquipos.png");
+}
+
+.fondo-jugadores {
+    --fondo: url("/img/fondoJugadores.png");
+}
+
+.fondo-partidos {
+    --fondo: url("/img/fondoPartidos.png");
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+.formulario-personalizado {
+    border-radius: 15px;
+}
+
+/* =========================
+   TABLAS
+========================= */
+
+.tabla-personalizada {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer-personalizado {
+    background-color: var(--color-secundario);
+    color: var(--color-blanco);
+    padding: 2rem;
+    margin-top: 2rem;
 }

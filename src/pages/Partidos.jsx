@@ -12,7 +12,9 @@ function Partidos() {
 
         <h1 className="fw-bold text-warning mt-3">Gestión de Partidos</h1>
 
-        <p className="lead">Registrá y administrá los partidos del torneo.</p>
+        <p className="lead text-white">
+          Registrá y administrá los partidos del torneo.
+        </p>
       </section>
 
       {/* Formulario */}

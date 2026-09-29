@@ -12,7 +12,9 @@ function Jugadores() {
 
         <h1 className="fw-bold text-primary mt-3">Gestión de Jugadores</h1>
 
-        <p className="lead">Registrá y administrá los jugadores del torneo.</p>
+        <p className="lead text-white">
+          Registrá y administrá los jugadores del torneo.
+        </p>
       </section>
 
       {/* Formulario */}

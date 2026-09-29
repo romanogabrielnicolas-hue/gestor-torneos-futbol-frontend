@@ -12,7 +12,9 @@ function Equipos() {
 
         <h1 className="fw-bold text-success mt-3">Gestión de Equipos</h1>
 
-        <p className="lead">Registrá y administrá los equipos del torneo.</p>
+        <p className="lead text-white">
+          Registrá y administrá los equipos del torneo.
+        </p>
       </section>
 
       {/* Formulario */}

@@ -1,7 +1,7 @@
 function Footer() {
   return (
-    <footer className="bg-dark text-white text-center p-3 mt-5">
-      <p className="mb-0">Gestor de Torneos de Fútbol</p>
+    <footer className="footer-personalizado text-center w-100">
+      <p className="mb-0">© 2026 - Gestor de Torneos de Fútbol Murak</p>
     </footer>
   );
 }
