@@ -11,14 +11,16 @@ function App() {
 
   return (
     <>
-      <Navbar setPagina={setPagina} />
-
-      {pagina === "inicio" && <Inicio setPagina={setPagina} />}
-      {pagina === "equipos" && <Equipos />}
-      {pagina === "jugadores" && <Jugadores />}
-      {pagina === "partidos" && <Partidos />}
-
-      <Footer />
+      <div className="d-flex flex-column min-vh-100">
+        <Navbar setPagina={setPagina} />
+        <div className="flex-grow-1">
+          {pagina === "inicio" && <Inicio setPagina={setPagina} />}
+          {pagina === "equipos" && <Equipos />}
+          {pagina === "jugadores" && <Jugadores />}
+          {pagina === "partidos" && <Partidos />}
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }
