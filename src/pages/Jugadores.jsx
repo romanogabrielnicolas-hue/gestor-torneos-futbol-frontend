@@ -1,6 +1,6 @@
 function Jugadores() {
   return (
-    <main className="container py-5">
+    <main className="fondo-pagina fondo-jugadores">
       {/* Encabezado */}
       <section className="text-center mb-5">
         <img
