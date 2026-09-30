@@ -1,16 +1,21 @@
 <div align="center">
 
 <img src="./public/img/logoMejorado.png" width="190" alt="Logo Gestor de Torneos">
-#  Gestor de Torneos de Fútbol - Frontend
+
+# Gestor de Torneos de Fútbol - Frontend
+
+### React + Vite + React Bootstrap
+
+Aplicación web desarrollada con **React + Vite** como migración del proyecto anterior de gestión de torneos de fútbol.
+
+<br>
 
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-Aplicación web desarrollada con **React + Vite** como migración del proyecto anterior de gestión de torneos de fútbol. El proyecto busca organizar la información de equipos, jugadores y partidos mediante una interfaz web moderna y responsive.
-
----
+## </div>
 
 ## 📋 Descripción
 
@@ -26,8 +31,6 @@ Este proyecto es la versión frontend de un gestor de torneos de fútbol, desarr
 - [🚀 Instalación](#instalación)
 - [💻 Uso](#uso)
 - [📁 Estructura del Proyecto](#estructura-del-proyecto)
-- [🤝 Contribuyendo](#contribuyendo)
-- [📜 Licencia](#licencia)
 - [🔗 Enlaces Importantes](#enlaces-importantes)
 
 ---
@@ -170,27 +173,6 @@ gestor-torneos-futbol-frontend/
 ├── vite.config.js
 └── README.md
 ```
-
----
-
-## 🤝 Contribuyendo
-
-¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, por favor:
-
-1.  Haz un fork del repositorio.
-2.  Crea una nueva rama (`git checkout -b feature/tu-nueva-funcionalidad`).
-3.  Realiza tus cambios.
-4.  Haz commit de tus cambios (`git commit -am 'Agrega nueva funcionalidad'`)
-5.  Haz push a la rama (`git push origin feature/tu-nueva-funcionalidad`)
-6.  Abre un Pull Request.
-
-Por favor, asegúrate de que tus contribuciones sigan las guías de estilo y pasen las pruebas (si las hubiera).
-
----
-
-## 📜 Licencia
-
-Este proyecto no especifica una licencia. Por defecto, el código no puede ser distribuido ni utilizado sin permiso explícito del autor.
 
 ---
 
