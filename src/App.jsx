@@ -15,9 +15,9 @@ function App() {
         <Navbar setPagina={setPagina} />
         <div className="flex-grow-1">
           {pagina === "inicio" && <Inicio setPagina={setPagina} />}
-          {pagina === "equipos" && <Equipos />}
-          {pagina === "jugadores" && <Jugadores />}
-          {pagina === "partidos" && <Partidos />}
+          {pagina === "equipos" && <Equipos setPagina={setPagina} />}
+          {pagina === "jugadores" && <Jugadores setPagina={setPagina} />}
+          {pagina === "partidos" && <Partidos setPagina={setPagina} />}
         </div>
         <Footer />
       </div>

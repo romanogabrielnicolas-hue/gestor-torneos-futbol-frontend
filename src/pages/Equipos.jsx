@@ -3,7 +3,7 @@ import BotonEliminar from "../components/BotonEliminar";
 import BotonEditar from "../components/BotonEditar";
 import BotonAgregar from "../components/BotonAgregar";
 
-function Equipos() {
+function Equipos({ setPagina }) {
   const [nombre, setNombre] = useState("");
   const [color, setColor] = useState("#008000");
   const [equipos, setEquipos] = useState([]);
@@ -217,6 +217,16 @@ function Equipos() {
           </div>
         </div>
       </section>
+
+      <div className="text-center py-4">
+        <button
+          className="btn btn-light shadow-sm fw-bold"
+          onClick={() => setPagina("inicio")}
+        >
+          <i className="bi bi-house-fill me-2"></i>
+          Volver a Inicio
+        </button>
+      </div>
     </main>
   );
 }
