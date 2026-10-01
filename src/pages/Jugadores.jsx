@@ -1,4 +1,116 @@
+import { useState } from "react";
+
 function Jugadores() {
+  const [nombre, setNombre] = useState("");
+  const [dni, setDni] = useState("");
+  const [edad, setEdad] = useState("");
+  const [posicion, setPosicion] = useState("");
+  const [equipo, setEquipo] = useState("");
+  const [numero, setNumero] = useState("");
+
+  const [jugadores, setJugadores] = useState([]);
+  const [contadorId, setContadorId] = useState(1);
+  const [editandoId, setEditandoId] = useState(null);
+
+  // Agregar jugador
+  function agregarJugador() {
+    if (
+      nombre.trim() === "" ||
+      dni.trim() === "" ||
+      edad === "" ||
+      posicion === "" ||
+      equipo === "" ||
+      numero === ""
+    ) {
+      alert("Complete todos los campos");
+      return;
+    }
+
+    const nuevoJugador = {
+      id: contadorId,
+      nombre: nombre,
+      dni: dni,
+      edad: edad,
+      posicion: posicion,
+      equipo: equipo,
+      numero: numero,
+    };
+
+    setJugadores([...jugadores, nuevoJugador]);
+    setContadorId(contadorId + 1);
+
+    limpiarFormulario();
+  }
+
+  // Preparar jugador para editar
+  function editarJugador(jugador) {
+    setNombre(jugador.nombre);
+    setDni(jugador.dni);
+    setEdad(jugador.edad);
+    setPosicion(jugador.posicion);
+    setEquipo(jugador.equipo);
+    setNumero(jugador.numero);
+
+    setEditandoId(jugador.id);
+  }
+
+  // Guardar cambios
+  function guardarCambios() {
+    if (
+      nombre.trim() === "" ||
+      dni.trim() === "" ||
+      edad === "" ||
+      posicion === "" ||
+      equipo === "" ||
+      numero === ""
+    ) {
+      alert("Complete todos los campos");
+      return;
+    }
+
+    const jugadoresActualizados = jugadores.map((jugador) => {
+      if (jugador.id === editandoId) {
+        return {
+          id: jugador.id,
+          nombre: nombre,
+          dni: dni,
+          edad: edad,
+          posicion: posicion,
+          equipo: equipo,
+          numero: numero,
+        };
+      }
+
+      return jugador;
+    });
+
+    setJugadores(jugadoresActualizados);
+
+    limpiarFormulario();
+    setEditandoId(null);
+  }
+
+  // Cancelar edición
+  function cancelarEdicion() {
+    limpiarFormulario();
+    setEditandoId(null);
+  }
+
+  // Eliminar jugador
+  function eliminarJugador(id) {
+    setJugadores(jugadores.filter((jugador) => jugador.id !== id));
+  }
+
+  // Limpiar formulario
+  function limpiarFormulario() {
+    setNombre("");
+    setDni("");
+    setEdad("");
+    setPosicion("");
+    setEquipo("");
+    setNumero("");
+  }
+
   return (
     <main className="fondo-pagina fondo-jugadores">
       {/* Encabezado */}
@@ -24,28 +136,119 @@ function Jugadores() {
             <h2 className="h4 fw-bold mb-4">➕ Añadir jugador</h2>
 
             <div className="row g-3">
+              {/* Nombre */}
               <div className="col-12 col-md-8">
-                <label className="form-label">Nombre del jugador</label>
+                <label className="form-label">Nombre y apellido</label>
 
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ingrese el nombre"
+                  placeholder="Ingrese nombre y apellido"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
                 />
               </div>
 
+              {/* DNI */}
               <div className="col-12 col-md-4">
-                <label className="form-label">Equipo</label>
+                <label className="form-label">DNI</label>
 
-                <select className="form-select">
-                  <option>Seleccione un equipo</option>
-                  <option>Equipo A</option>
-                  <option>Equipo B</option>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Ingrese el DNI"
+                  value={dni}
+                  onChange={(e) => setDni(e.target.value)}
+                />
+              </div>
+
+              {/* Edad */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Edad</label>
+
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Ingrese la edad"
+                  value={edad}
+                  onChange={(e) => setEdad(e.target.value)}
+                />
+              </div>
+
+              {/* Posición */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Posición</label>
+
+                <select
+                  className="form-select"
+                  value={posicion}
+                  onChange={(e) => setPosicion(e.target.value)}
+                >
+                  <option value="">Seleccione una posición</option>
+
+                  <option value="Arquero">Arquero</option>
+
+                  <option value="Defensor">Defensor</option>
+
+                  <option value="Mediocampista">Mediocampista</option>
+
+                  <option value="Delantero">Delantero</option>
                 </select>
               </div>
 
+              {/* Equipo */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Equipo</label>
+
+                <select
+                  className="form-select"
+                  value={equipo}
+                  onChange={(e) => setEquipo(e.target.value)}
+                >
+                  <option value="">Seleccione un equipo</option>
+
+                  <option value="Equipo A">Equipo A</option>
+
+                  <option value="Equipo B">Equipo B</option>
+                </select>
+              </div>
+
+              {/* Número */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Número de camiseta</label>
+
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Ingrese el número"
+                  value={numero}
+                  onChange={(e) => setNumero(e.target.value)}
+                />
+              </div>
+
+              {/* Botones */}
               <div className="col-12">
-                <button className="btn btn-primary">Agregar jugador</button>
+                {editandoId === null ? (
+                  <button className="btn btn-success" onClick={agregarJugador}>
+                    + Agregar Jugador
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-success me-2"
+                      onClick={guardarCambios}
+                    >
+                      Guardar cambios
+                    </button>
+
+                    <button
+                      className="btn btn-secondary"
+                      onClick={cancelarEdicion}
+                    >
+                      Cancelar
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -62,26 +265,45 @@ function Jugadores() {
               <table className="table table-hover align-middle">
                 <thead className="table-primary">
                   <tr>
+                    <th>ID</th>
                     <th>Jugador</th>
+                    <th>DNI</th>
+                    <th>Edad</th>
+                    <th>Posición</th>
                     <th>Equipo</th>
+                    <th>N.º</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>Jugador de ejemplo</td>
-                    <td>Equipo A</td>
-                    <td>
-                      <button className="btn btn-warning btn-sm me-2">
-                        Editar
-                      </button>
+                  {jugadores.map((jugador) => (
+                    <tr key={jugador.id}>
+                      <td>{jugador.id}</td>
+                      <td>{jugador.nombre}</td>
+                      <td>{jugador.dni}</td>
+                      <td>{jugador.edad}</td>
+                      <td>{jugador.posicion}</td>
+                      <td>{jugador.equipo}</td>
+                      <td>{jugador.numero}</td>
 
-                      <button className="btn btn-danger btn-sm">
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
+                      <td>
+                        <button
+                          className="btn btn-warning btn-sm me-2"
+                          onClick={() => editarJugador(jugador)}
+                        >
+                          Editar
+                        </button>
+
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => eliminarJugador(jugador.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
