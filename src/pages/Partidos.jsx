@@ -2,7 +2,7 @@ import { useState } from "react";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
-function Partidos() {
+function Partidos({ setPagina }) {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [cancha, setCancha] = useState("");
@@ -301,6 +301,15 @@ function Partidos() {
           </div>
         </div>
       </section>
+      <div className="text-center py-4">
+        <button
+          className="btn btn-light shadow-sm fw-bold"
+          onClick={() => setPagina("inicio")}
+        >
+          <i className="bi bi-house-fill me-2"></i>
+          Volver a Inicio
+        </button>
+      </div>
     </main>
   );
 }

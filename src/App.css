@@ -20,18 +20,10 @@ body {
     overflow-x: hidden;
 }
 body {
+    margin: 0;
+    padding: 0;
     color: var(--color-texto);
-
-    background-image:
-        linear-gradient(
-            rgba(0, 0, 0, 0.35),
-            rgba(0, 0, 0, 0.35)
-        ),
-        url("/img/fondo-index.png");
-
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll;
+    background-color: #f4f4f4;
 }
 
 /* =========================
@@ -257,6 +249,19 @@ body {
 .boton-personalizado:hover {
     transform: scale(1.03);
 }
+.fondo-inicio {
+    min-height: 100%;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.35)
+        ),
+        url("/img/fondo-index.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+}
 
 /* =========================
    FONDOS
@@ -311,6 +316,5 @@ body {
 .footer-personalizado {
     background-color: var(--color-secundario);
     color: var(--color-blanco);
-    padding: 2rem;
-    margin-top: 2rem;
+    padding: 1rem;
 }
