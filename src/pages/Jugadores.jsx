@@ -1,4 +1,7 @@
 import { useState } from "react";
+import BotonEditar from "../components/BotonEditar";
+import BotonEliminar from "../components/BotonEliminar";
+import BotonAgregar from "../components/BotonAgregar";
 
 function Jugadores() {
   const [nombre, setNombre] = useState("");
@@ -133,7 +136,19 @@ function Jugadores() {
       <section className="mb-5">
         <div className="card shadow">
           <div className="card-body p-4">
-            <h2 className="h4 fw-bold mb-4">➕ Añadir jugador</h2>
+            <h2 className="h4 fw-bold mb-4">
+              {editandoId === null ? (
+                <>
+                  <i className="bi bi-person-plus-fill me-2"></i>
+                  Añadir jugador
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-pencil-fill me-2"></i>
+                  Editar jugador
+                </>
+              )}
+            </h2>
 
             <div className="row g-3">
               {/* Nombre */}
@@ -229,9 +244,10 @@ function Jugadores() {
               {/* Botones */}
               <div className="col-12">
                 {editandoId === null ? (
-                  <button className="btn btn-success" onClick={agregarJugador}>
-                    + Agregar Jugador
-                  </button>
+                  <BotonAgregar
+                    texto="Agregar jugador"
+                    onClick={agregarJugador}
+                  />
                 ) : (
                   <>
                     <button
@@ -262,7 +278,7 @@ function Jugadores() {
             <h2 className="h4 fw-bold mb-4">👤 Jugadores registrados</h2>
 
             <div className="table-responsive">
-              <table className="table table-hover align-middle">
+              <table className="table table-striped table-hover align-middle">
                 <thead className="table-primary">
                   <tr>
                     <th>ID</th>
@@ -288,19 +304,13 @@ function Jugadores() {
                       <td>{jugador.numero}</td>
 
                       <td>
-                        <button
-                          className="btn btn-warning btn-sm me-2"
-                          onClick={() => editarJugador(jugador)}
-                        >
-                          Editar
-                        </button>
+                        <div className="d-flex align-items-center gap-2">
+                          <BotonEditar onClick={() => editarJugador(jugador)} />
 
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => eliminarJugador(jugador.id)}
-                        >
-                          Eliminar
-                        </button>
+                          <BotonEliminar
+                            onClick={() => eliminarJugador(jugador.id)}
+                          />
+                        </div>
                       </td>
                     </tr>
                   ))}

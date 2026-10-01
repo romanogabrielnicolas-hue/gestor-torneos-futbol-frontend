@@ -1,4 +1,7 @@
 import { useState } from "react";
+import BotonEliminar from "../components/BotonEliminar";
+import BotonEditar from "../components/BotonEditar";
+import BotonAgregar from "../components/BotonAgregar";
 
 function Equipos() {
   const [nombre, setNombre] = useState("");
@@ -91,7 +94,17 @@ function Equipos() {
         <div className="card shadow">
           <div className="card-body p-4">
             <h2 className="h4 fw-bold mb-4">
-              {editandoId === null ? "➕ Añadir equipo" : "✏️ Editar equipo"}
+              {editandoId === null ? (
+                <>
+                  <i className="bi bi-plus-circle me-2"></i>
+                  Añadir equipo
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-pencil-fill me-2"></i>
+                  Editar equipo
+                </>
+              )}
             </h2>
 
             <div className="row g-3">
@@ -120,12 +133,10 @@ function Equipos() {
 
               <div className="col-12">
                 {editandoId === null ? (
-                  <button
-                    className="btn btn-success me-2"
+                  <BotonAgregar
+                    texto="Agregar equipo"
                     onClick={agregarEquipo}
-                  >
-                    Agregar equipo
-                  </button>
+                  />
                 ) : (
                   <>
                     <button
@@ -156,7 +167,7 @@ function Equipos() {
             <h2 className="h4 fw-bold mb-4">🏆 Equipos registrados</h2>
 
             <div className="table-responsive">
-              <table className="table table-hover align-middle">
+              <table className="table table-striped table-hover align-middle">
                 <thead className="table-success">
                   <tr>
                     <th>Nombre</th>
@@ -189,19 +200,13 @@ function Equipos() {
                         </td>
 
                         <td>
-                          <button
-                            className="btn btn-warning btn-sm me-2"
-                            onClick={() => editarEquipo(equipo)}
-                          >
-                            Editar
-                          </button>
+                          <div className="d-flex align-items-center gap-2">
+                            <BotonEditar onClick={() => editarEquipo(equipo)} />
 
-                          <button
-                            className="btn btn-danger btn-sm"
-                            onClick={() => eliminarEquipo(equipo.id)}
-                          >
-                            Eliminar
-                          </button>
+                            <BotonEliminar
+                              onClick={() => eliminarEquipo(equipo.id)}
+                            />
+                          </div>
                         </td>
                       </tr>
                     ))
