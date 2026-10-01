@@ -1,5 +1,7 @@
 import { useState } from "react";
-
+import BotonEditar from "../components/BotonEditar";
+import BotonEliminar from "../components/BotonEliminar";
+import BotonAgregar from "../components/BotonAgregar";
 function Partidos() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
@@ -136,7 +138,19 @@ function Partidos() {
       <section className="mb-5">
         <div className="card shadow">
           <div className="card-body p-4">
-            <h2 className="h4 fw-bold mb-4">➕ Añadir partido</h2>
+            <h2 className="h4 fw-bold mb-4">
+              {editandoId === null ? (
+                <>
+                  <i className="bi bi-calendar-plus me-2"></i>
+                  Añadir partido
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-pencil-fill me-2"></i>
+                  Editar partido
+                </>
+              )}
+            </h2>
 
             <div className="row g-3">
               {/* Fecha */}
@@ -213,9 +227,10 @@ function Partidos() {
               {/* Botones */}
               <div className="col-12">
                 {editandoId === null ? (
-                  <button className="btn btn-warning" onClick={agregarPartido}>
-                    + Agregar Partido
-                  </button>
+                  <BotonAgregar
+                    texto="Agregar partido"
+                    onClick={agregarPartido}
+                  />
                 ) : (
                   <>
                     <button
@@ -246,7 +261,7 @@ function Partidos() {
             <h2 className="h4 fw-bold mb-4">📅 Partidos registrados</h2>
 
             <div className="table-responsive">
-              <table className="table table-hover align-middle">
+              <table className="table table-striped table-hover align-middle">
                 <thead className="table-warning">
                   <tr>
                     <th>ID</th>
@@ -270,19 +285,13 @@ function Partidos() {
                       <td>{partido.equipoVisitante}</td>
 
                       <td>
-                        <button
-                          className="btn btn-warning btn-sm me-2"
-                          onClick={() => editarPartido(partido)}
-                        >
-                          Editar
-                        </button>
+                        <div className="d-flex align-items-center gap-2">
+                          <BotonEditar onClick={() => editarPartido(partido)} />
 
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => eliminarPartido(partido.id)}
-                        >
-                          Eliminar
-                        </button>
+                          <BotonEliminar
+                            onClick={() => eliminarPartido(partido.id)}
+                          />
+                        </div>
                       </td>
                     </tr>
                   ))}
