@@ -15,127 +15,267 @@ Aplicación web desarrollada con **React + Vite** como migración del proyecto a
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-## </div>
+</div>
+
+---
 
 ## 📋 Descripción
 
-Este proyecto es la versión frontend de un gestor de torneos de fútbol, desarrollado utilizando **React** y **Vite**. Se enfoca en la organización y administración de equipos, jugadores y partidos a través de una interfaz de usuario intuitiva y visualmente atractiva, potenciada por **React Bootstrap** y **Bootstrap** para un diseño responsive.
+Este proyecto es la versión frontend de un gestor de torneos de fútbol, desarrollado utilizando **React** y **Vite**.
+
+Corresponde al **Repositorio N.º 2** y consiste en la migración progresiva del proyecto anterior a React, incorporando componentes reutilizables, React Bootstrap, Bootstrap Icons y estilos personalizados.
+
+La aplicación permite administrar **equipos, jugadores y partidos** mediante una interfaz visual y responsive.
 
 ---
 
 ## 📝 Tabla de Contenido
 
-- [⚽ Proyecto](#proyecto)
-- [✨ Características](#características)
-- [🛠️ Tecnologías Utilizadas](#tecnologías-utilizadas)
-- [🚀 Instalación](#instalación)
-- [💻 Uso](#uso)
-- [📁 Estructura del Proyecto](#estructura-del-proyecto)
-- [🔗 Enlaces Importantes](#enlaces-importantes)
+- [⚽ Proyecto](#-proyecto)
+- [✨ Características](#-características)
+- [🧩 Componentes](#-componentes)
+- [🛠️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
+- [🚀 Instalación](#-instalación)
+- [💻 Uso](#-uso)
+- [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+- [🔎 SEO](#-seo)
+- [🌐 Deploy](#-deploy)
+- [🔗 Enlaces Importantes](#-enlaces-importantes)
 
 ---
 
 ## ⚽ Proyecto
 
-Este proyecto corresponde al **Repositorio N.º 2** del trabajo práctico. Es una migración progresiva de un proyecto anterior, adoptando las tecnologías modernas de React y Vite para una mejor experiencia de desarrollo y rendimiento.
+Este proyecto corresponde al **Repositorio N.º 2** del trabajo práctico.
+
+Se realizó una migración del proyecto anterior, desarrollado con HTML, CSS y JavaScript, hacia una aplicación utilizando **React + Vite**.
+
+Durante la migración se mantuvo el diseño general del proyecto y se incorporaron nuevas funcionalidades y componentes reutilizables.
 
 ---
 
 ## ✨ Características
 
-- **Gestión Integral de Torneos:** Permite administrar equipos, jugadores y partidos de un torneo de fútbol.
-- **Interfaz Moderna y Responsive:** Diseñada con React Bootstrap y Bootstrap para adaptarse a cualquier tamaño de pantalla.
-- **Componentes Reutilizables:** La arquitectura del proyecto se basa en componentes modulares para facilitar el mantenimiento y la escalabilidad.
-- **Navegación Intuitiva:** Fácil acceso a las diferentes secciones (Inicio, Equipos, Jugadores, Partidos) a través de una barra de navegación.
-- **Diseño Visualmente Atractivo:** Uso de estilos personalizados y temas de Bootstrap para una experiencia de usuario agradable.
-- **Buenas Prácticas de Desarrollo:** Se busca aplicar buenas prácticas en la organización del código y desarrollo frontend.
-
 ### 🏠 Inicio
 
-Página principal del sistema con un resumen y acceso visual a las diferentes funcionalidades del gestor.
+Página principal del sistema con acceso visual a las diferentes funcionalidades del gestor.
+
+Desde esta sección se puede acceder a:
+
+- Gestión de Equipos.
+- Gestión de Jugadores.
+- Gestión de Partidos.
 
 ### ⚽ Equipos
 
-- **Registro de Equipos:** Formulario para añadir nuevos equipos, incluyendo la selección de un color representativo.
-- **Visualización de Equipos:** Tabla que muestra los equipos registrados, con opciones para editar o eliminar.
+- Registrar equipos.
+- Seleccionar el color del equipo.
+- Visualizar los equipos registrados.
+- Editar equipos.
+- Eliminar equipos.
+- Botón para volver al inicio.
 
 ### 👤 Jugadores
 
-- **Registro de Jugadores:** Formulario para añadir jugadores, asociándolos a un equipo específico.
-- **Visualización de Jugadores:** Tabla que lista los jugadores, con botones para editar o eliminar.
+- Registrar jugadores.
+- Asociar jugadores a un equipo.
+- Visualizar los jugadores registrados.
+- Editar jugadores.
+- Eliminar jugadores.
+- Botón para volver al inicio.
 
 ### 📅 Partidos
 
-- **Registro de Partidos:** Formulario para programar partidos, seleccionando equipos local y visitante, fecha y hora.
-- **Visualización de Partidos:** Tabla que muestra los partidos programados, con opciones para editar o eliminar.
+- Registrar partidos.
+- Seleccionar equipo local y visitante.
+- Registrar fecha, hora y cancha.
+- Visualizar los partidos registrados.
+- Editar partidos.
+- Eliminar partidos.
+- Botón para volver al inicio.
+
+---
+
+## 🧩 Componentes
+
+El proyecto utiliza componentes reutilizables para organizar mejor la aplicación.
+
+Entre los componentes desarrollados se encuentran:
+
+- `Navbar`
+- `Footer`
+- `BotonAgregar`
+- `BotonEditar`
+- `BotonEliminar`
+- `LogoTexto`
+
+Los componentes de botones permiten reutilizar diferentes estilos y acciones dentro de las páginas de gestión.
+
+También se utiliza `styled-components` para algunos componentes personalizados.
+
+---
+
+## 🧠 JavaScript y React
+
+Para manejar la información de la aplicación se utiliza **React Hooks**, principalmente `useState`.
+
+Se implementaron funcionalidades para:
+
+- Agregar registros.
+- Editar registros.
+- Eliminar registros.
+- Actualizar información.
+- Controlar formularios.
+- Manejar la navegación entre páginas.
+- Mostrar dinámicamente los datos registrados.
+
+Para trabajar con los datos se utilizan métodos de JavaScript como:
+
+- `map()`
+- `filter()`
+
+---
+
+## 🧭 Navegación
+
+La aplicación cuenta con una barra de navegación que permite acceder a las diferentes secciones:
+
+- Inicio
+- Equipos
+- Jugadores
+- Partidos
+
+También se incorporó el botón **"Volver a Inicio"** en las páginas de gestión.
+
+La navegación actual se maneja mediante el estado de React.
+
+---
+
+## 🎨 Diseño
+
+Se mantuvo parte del diseño visual del proyecto anterior y se adaptó a React.
+
+Se incorporaron:
+
+- Fondos personalizados.
+- Logo del proyecto.
+- Imágenes para cada sección.
+- Tarjetas.
+- Botones personalizados.
+- Bootstrap Icons.
+- Efectos visuales.
+- Estilos CSS personalizados.
+
+El diseño responsive se realiza principalmente utilizando las clases de **Bootstrap**.
+
+---
+
+## 📱 Diseño Responsive
+
+Se utilizan clases de Bootstrap para adaptar la interfaz a diferentes tamaños de pantalla.
+
+Algunas de las clases utilizadas son:
+
+- `col-12`
+- `col-md-4`
+- `navbar-expand-lg`
+- `navbar-toggler`
+- `table-responsive`
+- `img-fluid`
+
+De esta manera, la aplicación puede adaptarse a computadoras, tablets y dispositivos móviles.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Framework Frontend:** React
-- **Build Tool:** Vite
-- **UI Framework:** React Bootstrap, Bootstrap
-- **Lenguaje:** JavaScript (ES6+)
-- **CSS:** CSS3 (con estilos personalizados y clases de Bootstrap)
-- **Gestión de Estado:** React Hooks (useState)
-- **Control de Versiones:** Git, GitHub
+- **React**
+- **Vite**
+- **JavaScript**
+- **React Bootstrap**
+- **Bootstrap**
+- **Bootstrap Icons**
+- **CSS3**
+- **styled-components**
+- **Git**
+- **GitHub**
+- **Vercel**
 
 ---
 
 ## 🚀 Instalación
 
-Sigue estos pasos para configurar el proyecto localmente:
+Para ejecutar el proyecto localmente se deben seguir los siguientes pasos.
 
-1.  **Clonar el Repositorio:**
+### 1. Clonar el repositorio
 
-    ```bash
-    git clone https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend.git
-    cd gestor-torneos-futbol-frontend
-    ```
+```bash
+git clone https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend.git
+```
 
-2.  **Instalar Dependencias:**
-    Asegúrate de tener Node.js y npm (o yarn) instalados. Luego, ejecuta:
+Luego ingresar a la carpeta:
 
-    ```bash
-    npm install
-    # o si usas yarn:
-    # yarn install
-    ```
+```bash
+cd gestor-torneos-futbol-frontend
+```
 
-3.  **Iniciar el Servidor de Desarrollo:**
-    ```bash
-    npm run dev
-    # o si usas yarn:
-    # yarn dev
-    ```
+### 2. Instalar las dependencias
 
-El proyecto se ejecutará en `http://localhost:5173` (o el puerto que Vite asigne por defecto).
+```bash
+npm install
+```
+
+### 3. Iniciar el servidor de desarrollo
+
+```bash
+npm run dev
+```
+
+El proyecto se ejecutará en la dirección indicada por Vite, normalmente:
+
+```text
+http://localhost:5173
+```
 
 ---
 
 ## 💻 Uso
 
-Esta aplicación frontend está diseñada para gestionar torneos de fútbol. Permite a los usuarios interactuar con las siguientes funcionalidades:
+La aplicación permite gestionar diferentes elementos de un torneo de fútbol.
 
-1.  **Navegación:** Utiliza la barra de navegación superior para cambiar entre las secciones:
-    - **Inicio:** Vista principal con accesos directos a las demás secciones.
-    - **Equipos:** Para agregar, ver, editar y eliminar equipos del torneo.
-    - **Jugadores:** Para agregar, ver, editar y eliminar jugadores, asociándolos a un equipo.
-    - **Partidos:** Para programar y gestionar los partidos, incluyendo fechas y horas.
+### Navegación
 
-2.  **Gestión de Datos:** En cada sección de gestión (Equipos, Jugadores, Partidos), encontrarás formularios para añadir nueva información y tablas para visualizar y administrar los datos existentes.
+Desde la barra de navegación se puede acceder a:
 
-**Ejemplo de Uso:**
+- **Inicio:** página principal.
+- **Equipos:** administración de equipos.
+- **Jugadores:** administración de jugadores.
+- **Partidos:** administración de partidos.
 
-- **Agregar un nuevo equipo:** Navega a la sección 'Equipos', completa el nombre y selecciona un color en el formulario, luego haz clic en 'Agregar equipo'.
-- **Programar un partido:** Ve a la sección 'Partidos', selecciona los equipos local y visitante, la fecha y la hora, y haz clic en 'Agregar partido'.
+### Gestión de datos
+
+En cada sección se dispone de un formulario para agregar información y una tabla para visualizar los registros.
+
+También se pueden realizar acciones como:
+
+- Editar.
+- Eliminar.
+- Volver al inicio.
+
+### Ejemplo
+
+Para agregar un equipo:
+
+1. Ingresar a **Equipos**.
+2. Escribir el nombre del equipo.
+3. Seleccionar un color.
+4. Presionar **Agregar equipo**.
+
+Para modificarlo se utiliza el botón **Editar** y para eliminarlo el botón **Eliminar**.
 
 ---
 
 ## 📁 Estructura del Proyecto
-
-El proyecto sigue una estructura organizada para facilitar la modularidad y el mantenimiento:
 
 ```text
 gestor-torneos-futbol-frontend/
@@ -153,8 +293,12 @@ gestor-torneos-futbol-frontend/
 │
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.jsx
-│   │   └── Footer.jsx
+│   │   ├── navbar.jsx
+│   │   ├── footer.jsx
+│   │   ├── BotonAgregar.jsx
+│   │   ├── BotonEditar.jsx
+│   │   ├── BotonEliminar.jsx
+│   │   └── LogoTexto.jsx
 │   │
 │   ├── pages/
 │   │   ├── Inicio.jsx
@@ -164,7 +308,6 @@ gestor-torneos-futbol-frontend/
 │   │
 │   ├── App.jsx
 │   ├── App.css
-│   ├── index.css
 │   └── main.jsx
 │
 ├── .oxlintrc.json
@@ -176,23 +319,47 @@ gestor-torneos-futbol-frontend/
 
 ---
 
+## 🔎 SEO
+
+Se mantienen estrategias de SEO On-Page utilizadas en el proyecto anterior.
+
+Entre ellas:
+
+- Títulos descriptivos.
+- Meta descripción.
+- Meta viewport.
+- Atributos `alt` en las imágenes.
+- Uso de etiquetas semánticas.
+- Estructura organizada del contenido.
+- Diseño responsive.
+
+---
+
+## 🌐 Deploy
+
+El proyecto fue preparado para realizar el deploy utilizando **Vercel**.
+
+También se realizaron pruebas de compilación utilizando:
+
+```bash
+npm run build
+```
+
+---
+
 ## 🔗 Enlaces Importantes
 
-- **URL del Repositorio:** [https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend](https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend)
+- **Repositorio en GitHub:**  
+  https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend
+
+- **Proyecto desplegado:**  
+  Vercel
+  https://gestor-torneos-futbol-frontend.vercel.app/
 
 ---
 
-<footer>
-  <p align="center">
-    Creado con ❤️ por <a href="https://github.com/romanogabrielnicolas-hue">romano gabriel nicolas</a>
-  </p>
-  <p align="center">
-    <a href="https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend/stargazers"><img src="https://img.shields.io/github/stars/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend?style=social" alt="GitHub Stars"></a>
-    <a href="https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend/forks"><img src="https://img.shields.io/github/forks/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend?style=social" alt="GitHub Forks"></a>
-    <a href="https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend/issues"><img src="https://img.shields.io/github/issues/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend?style=social" alt="GitHub Issues"></a>
-  </p>
-</footer>
+<div align="center">
 
----
+Creado con ❤️ por **Romano Gabriel Nicolas**
 
-**<p align="center">Generated by [ReadmeCodeGen](https://www.readmecodegen.com/)</p>**
+</div>
