@@ -1,3 +1,4 @@
+import LogoTexto from "./LogoTexto";
 function Navbar({ setPagina }) {
   return (
     <nav className="navbar navbar-dark navbar-personalizada navbar-expand-lg">
@@ -11,9 +12,7 @@ function Navbar({ setPagina }) {
           />
 
           <div className="ms-2">
-            <div className="texto-logo">Gestor de</div>
-
-            <div className="texto-logo-torneos">Torneos</div>
+            <LogoTexto />
           </div>
         </div>
 

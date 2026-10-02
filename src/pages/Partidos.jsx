@@ -1,4 +1,121 @@
-function Partidos() {
+import { useState } from "react";
+import BotonEditar from "../components/BotonEditar";
+import BotonEliminar from "../components/BotonEliminar";
+import BotonAgregar from "../components/BotonAgregar";
+function Partidos({ setPagina }) {
+  const [fecha, setFecha] = useState("");
+  const [hora, setHora] = useState("");
+  const [cancha, setCancha] = useState("");
+  const [equipoLocal, setEquipoLocal] = useState("");
+  const [equipoVisitante, setEquipoVisitante] = useState("");
+
+  const [partidos, setPartidos] = useState([]);
+  const [contadorId, setContadorId] = useState(1);
+  const [editandoId, setEditandoId] = useState(null);
+
+  // Agregar partido
+  function agregarPartido() {
+    if (
+      fecha === "" ||
+      hora === "" ||
+      cancha.trim() === "" ||
+      equipoLocal === "" ||
+      equipoVisitante === ""
+    ) {
+      alert("Complete todos los campos");
+      return;
+    }
+
+    if (equipoLocal === equipoVisitante) {
+      alert("El equipo local y visitante no pueden ser iguales");
+      return;
+    }
+
+    const nuevoPartido = {
+      id: contadorId,
+      fecha: fecha,
+      hora: hora,
+      cancha: cancha,
+      equipoLocal: equipoLocal,
+      equipoVisitante: equipoVisitante,
+    };
+
+    setPartidos([...partidos, nuevoPartido]);
+    setContadorId(contadorId + 1);
+
+    limpiarFormulario();
+  }
+
+  // Preparar partido para editar
+  function editarPartido(partido) {
+    setFecha(partido.fecha);
+    setHora(partido.hora);
+    setCancha(partido.cancha);
+    setEquipoLocal(partido.equipoLocal);
+    setEquipoVisitante(partido.equipoVisitante);
+
+    setEditandoId(partido.id);
+  }
+
+  // Guardar cambios
+  function guardarCambios() {
+    if (
+      fecha === "" ||
+      hora === "" ||
+      cancha.trim() === "" ||
+      equipoLocal === "" ||
+      equipoVisitante === ""
+    ) {
+      alert("Complete todos los campos");
+      return;
+    }
+
+    if (equipoLocal === equipoVisitante) {
+      alert("El equipo local y visitante no pueden ser iguales");
+      return;
+    }
+
+    const partidosActualizados = partidos.map((partido) => {
+      if (partido.id === editandoId) {
+        return {
+          id: partido.id,
+          fecha: fecha,
+          hora: hora,
+          cancha: cancha,
+          equipoLocal: equipoLocal,
+          equipoVisitante: equipoVisitante,
+        };
+      }
+
+      return partido;
+    });
+
+    setPartidos(partidosActualizados);
+
+    limpiarFormulario();
+    setEditandoId(null);
+  }
+
+  // Cancelar edición
+  function cancelarEdicion() {
+    limpiarFormulario();
+    setEditandoId(null);
+  }
+
+  // Eliminar partido
+  function eliminarPartido(id) {
+    setPartidos(partidos.filter((partido) => partido.id !== id));
+  }
+
+  // Limpiar formulario
+  function limpiarFormulario() {
+    setFecha("");
+    setHora("");
+    setCancha("");
+    setEquipoLocal("");
+    setEquipoVisitante("");
+  }
+
   return (
     <main className="fondo-pagina fondo-partidos">
       {/* Encabezado */}
@@ -21,43 +138,116 @@ function Partidos() {
       <section className="mb-5">
         <div className="card shadow">
           <div className="card-body p-4">
-            <h2 className="h4 fw-bold mb-4">➕ Añadir partido</h2>
+            <h2 className="h4 fw-bold mb-4">
+              {editandoId === null ? (
+                <>
+                  <i className="bi bi-calendar-plus me-2"></i>
+                  Añadir partido
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-pencil-fill me-2"></i>
+                  Editar partido
+                </>
+              )}
+            </h2>
 
             <div className="row g-3">
-              <div className="col-12 col-md-6">
-                <label className="form-label">Equipo local</label>
-
-                <select className="form-select">
-                  <option>Seleccione un equipo</option>
-                  <option>Equipo A</option>
-                  <option>Equipo B</option>
-                </select>
-              </div>
-
-              <div className="col-12 col-md-6">
-                <label className="form-label">Equipo visitante</label>
-
-                <select className="form-select">
-                  <option>Seleccione un equipo</option>
-                  <option>Equipo A</option>
-                  <option>Equipo B</option>
-                </select>
-              </div>
-
+              {/* Fecha */}
               <div className="col-12 col-md-6">
                 <label className="form-label">Fecha</label>
 
-                <input type="date" className="form-control" />
+                <input
+                  type="date"
+                  className="form-control"
+                  value={fecha}
+                  onChange={(e) => setFecha(e.target.value)}
+                />
               </div>
 
+              {/* Hora */}
               <div className="col-12 col-md-6">
                 <label className="form-label">Hora</label>
 
-                <input type="time" className="form-control" />
+                <input
+                  type="time"
+                  className="form-control"
+                  value={hora}
+                  onChange={(e) => setHora(e.target.value)}
+                />
               </div>
 
+              {/* Cancha */}
               <div className="col-12">
-                <button className="btn btn-warning">Agregar partido</button>
+                <label className="form-label">Cancha</label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Ingrese el nombre de la cancha"
+                  value={cancha}
+                  onChange={(e) => setCancha(e.target.value)}
+                />
+              </div>
+
+              {/* Equipo local */}
+              <div className="col-12 col-md-6">
+                <label className="form-label">Equipo local</label>
+
+                <select
+                  className="form-select"
+                  value={equipoLocal}
+                  onChange={(e) => setEquipoLocal(e.target.value)}
+                >
+                  <option value="">Seleccione el equipo local</option>
+
+                  <option value="Equipo A">Equipo A</option>
+
+                  <option value="Equipo B">Equipo B</option>
+                </select>
+              </div>
+
+              {/* Equipo visitante */}
+              <div className="col-12 col-md-6">
+                <label className="form-label">Equipo visitante</label>
+
+                <select
+                  className="form-select"
+                  value={equipoVisitante}
+                  onChange={(e) => setEquipoVisitante(e.target.value)}
+                >
+                  <option value="">Seleccione el equipo visitante</option>
+
+                  <option value="Equipo A">Equipo A</option>
+
+                  <option value="Equipo B">Equipo B</option>
+                </select>
+              </div>
+
+              {/* Botones */}
+              <div className="col-12">
+                {editandoId === null ? (
+                  <BotonAgregar
+                    texto="Agregar partido"
+                    onClick={agregarPartido}
+                  />
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-warning me-2"
+                      onClick={guardarCambios}
+                    >
+                      Guardar cambios
+                    </button>
+
+                    <button
+                      className="btn btn-secondary"
+                      onClick={cancelarEdicion}
+                    >
+                      Cancelar
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -71,39 +261,55 @@ function Partidos() {
             <h2 className="h4 fw-bold mb-4">📅 Partidos registrados</h2>
 
             <div className="table-responsive">
-              <table className="table table-hover align-middle">
+              <table className="table table-striped table-hover align-middle">
                 <thead className="table-warning">
                   <tr>
-                    <th>Local</th>
-                    <th>Visitante</th>
+                    <th>ID</th>
                     <th>Fecha</th>
                     <th>Hora</th>
+                    <th>Cancha</th>
+                    <th>Local</th>
+                    <th>Visitante</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>Equipo A</td>
-                    <td>Equipo B</td>
-                    <td>00/00/0000</td>
-                    <td>00:00</td>
-                    <td>
-                      <button className="btn btn-warning btn-sm me-2">
-                        Editar
-                      </button>
+                  {partidos.map((partido) => (
+                    <tr key={partido.id}>
+                      <td>{partido.id}</td>
+                      <td>{partido.fecha}</td>
+                      <td>{partido.hora}</td>
+                      <td>{partido.cancha}</td>
+                      <td>{partido.equipoLocal}</td>
+                      <td>{partido.equipoVisitante}</td>
 
-                      <button className="btn btn-danger btn-sm">
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
+                      <td>
+                        <div className="d-flex align-items-center gap-2">
+                          <BotonEditar onClick={() => editarPartido(partido)} />
+
+                          <BotonEliminar
+                            onClick={() => eliminarPartido(partido.id)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </section>
+      <div className="text-center py-4">
+        <button
+          className="btn btn-light shadow-sm fw-bold"
+          onClick={() => setPagina("inicio")}
+        >
+          <i className="bi bi-house-fill me-2"></i>
+          Volver a Inicio
+        </button>
+      </div>
     </main>
   );
 }
