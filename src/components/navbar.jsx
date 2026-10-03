@@ -1,10 +1,10 @@
-import LogoTexto from "./LogoTexto";
-function Navbar({ setPagina }) {
+import { Link } from "react-router-dom";
+
+function Navbar() {
   return (
     <nav className="navbar navbar-dark navbar-personalizada navbar-expand-lg">
       <div className="container py-2">
-        {/* Logo y nombre */}
-        <div className="d-flex align-items-center">
+        <Link to="/" className="text-decoration-none d-flex align-items-center">
           <img
             src="/img/logoMejorado.png"
             alt="Logo Gestor de Torneos"
@@ -12,11 +12,11 @@ function Navbar({ setPagina }) {
           />
 
           <div className="ms-2">
-            <LogoTexto />
+            <div className="texto-logo">Gestor de</div>
+            <div className="texto-logo-torneos">Torneos</div>
           </div>
-        </div>
+        </Link>
 
-        {/* Botón hamburguesa */}
         <button
           className="navbar-toggler"
           type="button"
@@ -29,12 +29,11 @@ function Navbar({ setPagina }) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Menú */}
         <div className="collapse navbar-collapse" id="menuNavegacion">
           <div className="d-flex flex-column flex-md-row gap-2 ms-auto mt-3 mt-md-0">
-            <button
+            <Link
+              to="/"
               className="btn btn-light fw-bold px-4 py-2 rounded-3 shadow-sm d-flex align-items-center"
-              onClick={() => setPagina("inicio")}
             >
               <img
                 src="/img/logoMejorado.png"
@@ -44,11 +43,11 @@ function Navbar({ setPagina }) {
                 className="me-2"
               />
               Inicio
-            </button>
+            </Link>
 
-            <button
+            <Link
+              to="/equipos"
               className="btn btn-light fw-bold px-4 py-2 rounded-3 shadow-sm d-flex align-items-center"
-              onClick={() => setPagina("equipos")}
             >
               <img
                 src="/img/equipos.png"
@@ -58,11 +57,11 @@ function Navbar({ setPagina }) {
                 className="me-2"
               />
               Equipos
-            </button>
+            </Link>
 
-            <button
+            <Link
+              to="/jugadores"
               className="btn btn-light fw-bold px-4 py-2 rounded-3 shadow-sm d-flex align-items-center"
-              onClick={() => setPagina("jugadores")}
             >
               <img
                 src="/img/jugadores.png"
@@ -72,11 +71,11 @@ function Navbar({ setPagina }) {
                 className="me-2"
               />
               Jugadores
-            </button>
+            </Link>
 
-            <button
+            <Link
+              to="/partidos"
               className="btn btn-light fw-bold px-4 py-2 rounded-3 shadow-sm d-flex align-items-center"
-              onClick={() => setPagina("partidos")}
             >
               <img
                 src="/img/partidos.png"
@@ -86,7 +85,7 @@ function Navbar({ setPagina }) {
                 className="me-2"
               />
               Partidos
-            </button>
+            </Link>
           </div>
         </div>
       </div>
