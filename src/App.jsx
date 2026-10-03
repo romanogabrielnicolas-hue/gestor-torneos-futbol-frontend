@@ -1,27 +1,22 @@
-import { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
+
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import Inicio from "./pages/Inicio";
-import Equipos from "./pages/Equipos";
-import Jugadores from "./pages/Jugadores";
-import Partidos from "./pages/Partidos";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
-  const [pagina, setPagina] = useState("inicio");
-
   return (
-    <>
+    <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
-        <Navbar setPagina={setPagina} />
+        <Navbar />
+
         <div className="flex-grow-1">
-          {pagina === "inicio" && <Inicio setPagina={setPagina} />}
-          {pagina === "equipos" && <Equipos setPagina={setPagina} />}
-          {pagina === "jugadores" && <Jugadores setPagina={setPagina} />}
-          {pagina === "partidos" && <Partidos setPagina={setPagina} />}
+          <AppRoutes />
         </div>
+
         <Footer />
       </div>
-    </>
+    </BrowserRouter>
   );
 }
 

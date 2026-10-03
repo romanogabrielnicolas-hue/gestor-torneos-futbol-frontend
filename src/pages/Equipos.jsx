@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonEditar from "../components/BotonEditar";
 import BotonAgregar from "../components/BotonAgregar";
 
-function Equipos({ setPagina }) {
+function Equipos() {
   const [nombre, setNombre] = useState("");
   const [color, setColor] = useState("#008000");
   const [equipos, setEquipos] = useState([]);
@@ -219,13 +220,10 @@ function Equipos({ setPagina }) {
       </section>
 
       <div className="text-center py-4">
-        <button
-          className="btn btn-light shadow-sm fw-bold"
-          onClick={() => setPagina("inicio")}
-        >
+        <Link to="/" className="btn btn-light shadow-sm fw-bold">
           <i className="bi bi-house-fill me-2"></i>
           Volver a Inicio
-        </button>
+        </Link>
       </div>
     </main>
   );

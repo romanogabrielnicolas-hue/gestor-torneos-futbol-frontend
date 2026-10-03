@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
-function Partidos({ setPagina }) {
+function Partidos() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [cancha, setCancha] = useState("");
@@ -302,13 +303,10 @@ function Partidos({ setPagina }) {
         </div>
       </section>
       <div className="text-center py-4">
-        <button
-          className="btn btn-light shadow-sm fw-bold"
-          onClick={() => setPagina("inicio")}
-        >
+        <Link to="/" className="btn btn-light shadow-sm fw-bold">
           <i className="bi bi-house-fill me-2"></i>
           Volver a Inicio
-        </button>
+        </Link>
       </div>
     </main>
   );

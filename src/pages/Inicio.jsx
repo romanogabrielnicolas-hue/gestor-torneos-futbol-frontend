@@ -1,4 +1,6 @@
-function Inicio({ setPagina }) {
+import { Link } from "react-router-dom";
+
+function Inicio() {
   return (
     <main className="container-fluid fondo-inicio py-5">
       <div className="container">
@@ -10,7 +12,9 @@ function Inicio({ setPagina }) {
             className="imagen-pagina"
           />
 
-          <h1 className="fw-bold text-success mt-3">Gestor de Torneos</h1>
+          <h1 className="fw-bold text-success mt-3">
+            Gestor de Torneos
+          </h1>
 
           <p className="lead text-white">
             Sistema para gestionar equipos, jugadores y partidos.
@@ -20,6 +24,7 @@ function Inicio({ setPagina }) {
         {/* Opciones principales */}
         <section>
           <div className="row g-4">
+
             {/* Equipos */}
             <div className="col-12 col-md-4">
               <div className="card h-100 shadow tarjeta-opcion tarjeta-equipos text-center">
@@ -30,18 +35,18 @@ function Inicio({ setPagina }) {
                     className="imagen-tarjeta mb-3"
                   />
 
-                  <h2 className="h4 fw-bold"> Equipos</h2>
+                  <h2 className="h4 fw-bold">Equipos</h2>
 
                   <p className="text-muted">
                     Registrá y administrá los equipos del torneo.
                   </p>
 
-                  <button
+                  <Link
+                    to="/equipos"
                     className="btn btn-success boton-personalizado"
-                    onClick={() => setPagina("equipos")}
                   >
                     Gestión de Equipos
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -56,18 +61,18 @@ function Inicio({ setPagina }) {
                     className="imagen-tarjeta mb-3"
                   />
 
-                  <h2 className="h4 fw-bold"> Jugadores</h2>
+                  <h2 className="h4 fw-bold">Jugadores</h2>
 
                   <p className="text-muted">
                     Registrá y administrá los jugadores.
                   </p>
 
-                  <button
+                  <Link
+                    to="/jugadores"
                     className="btn btn-primary boton-personalizado"
-                    onClick={() => setPagina("jugadores")}
                   >
                     Gestión de Jugadores
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -82,21 +87,22 @@ function Inicio({ setPagina }) {
                     className="imagen-tarjeta mb-3"
                   />
 
-                  <h2 className="h4 fw-bold"> Partidos</h2>
+                  <h2 className="h4 fw-bold">Partidos</h2>
 
                   <p className="text-muted">
                     Registrá y administrá los partidos.
                   </p>
 
-                  <button
+                  <Link
+                    to="/partidos"
                     className="btn btn-warning boton-personalizado"
-                    onClick={() => setPagina("partidos")}
                   >
                     Gestión de Partidos
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
+
           </div>
         </section>
       </div>
