@@ -23,7 +23,7 @@ Aplicación web desarrollada con **React + Vite** como migración del proyecto a
 
 Este proyecto es la versión frontend de un gestor de torneos de fútbol, desarrollado utilizando **React** y **Vite**.
 
-Corresponde al **Repositorio N.º 2** y consiste en la migración progresiva del proyecto anterior a React, incorporando componentes reutilizables, React Bootstrap, Bootstrap Icons y estilos personalizados.
+Corresponde al **Repositorio N.º 2** y consiste en la migración progresiva del proyecto anterior a React, incorporando componentes reutilizables, React Bootstrap, Bootstrap Icons, React Router y estilos personalizados.
 
 La aplicación permite administrar **equipos, jugadores y partidos** mediante una interfaz visual y responsive.
 
@@ -34,7 +34,13 @@ La aplicación permite administrar **equipos, jugadores y partidos** mediante un
 - [⚽ Proyecto](#-proyecto)
 - [✨ Características](#-características)
 - [🧩 Componentes](#-componentes)
+- [🧠 JavaScript y React](#-javascript-y-react)
+- [📦 Props](#-props)
+- [🧭 Navegación](#-navegación)
+- [🎨 Diseño](#-diseño)
+- [📱 Diseño Responsive](#-diseño-responsive)
 - [🛠️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
+- [🗄️ Base de Datos](#️-base-de-datos)
 - [🚀 Instalación](#-instalación)
 - [💻 Uso](#-uso)
 - [📁 Estructura del Proyecto](#-estructura-del-proyecto)
@@ -111,6 +117,8 @@ Entre los componentes desarrollados se encuentran:
 
 Los componentes de botones permiten reutilizar diferentes estilos y acciones dentro de las páginas de gestión.
 
+Los componentes también utilizan **props** para recibir información y funciones desde los componentes padres.
+
 También se utiliza `styled-components` para algunos componentes personalizados.
 
 ---
@@ -134,6 +142,31 @@ Para trabajar con los datos se utilizan métodos de JavaScript como:
 - `map()`
 - `filter()`
 
+El método `map()` permite recorrer las listas y generar dinámicamente los elementos de las tablas.
+
+---
+
+## 📦 Props
+
+El proyecto utiliza **props** para enviar información y funciones entre componentes.
+
+Por ejemplo, `BotonAgregar` recibe las props:
+
+- `texto`
+- `onClick`
+
+Mientras que `BotonEditar` y `BotonEliminar` reciben:
+
+- `onClick`
+
+Ejemplo:
+
+```jsx
+<BotonEliminar onClick={() => eliminarEquipo(equipo.id)} />
+```
+
+Esto permite que los componentes de botones sean reutilizables y que cada página pueda indicar qué acción debe realizarse.
+
 ---
 
 ## 🧭 Navegación
@@ -147,7 +180,24 @@ La aplicación cuenta con una barra de navegación que permite acceder a las dif
 
 También se incorporó el botón **"Volver a Inicio"** en las páginas de gestión.
 
-La navegación actual se maneja mediante el estado de React.
+La navegación se realiza utilizando **React Router**, permitiendo cambiar entre las diferentes páginas sin recargar completamente la aplicación.
+
+### Rutas principales
+
+| Ruta         | Página    |
+| ------------ | --------- |
+| `/`          | Inicio    |
+| `/equipos`   | Equipos   |
+| `/jugadores` | Jugadores |
+| `/partidos`  | Partidos  |
+
+Las rutas se encuentran organizadas en:
+
+```text
+src/routes/AppRoutes.jsx
+```
+
+Se utilizan componentes `Link` para realizar la navegación entre las diferentes páginas.
 
 ---
 
@@ -165,8 +215,11 @@ Se incorporaron:
 - Bootstrap Icons.
 - Efectos visuales.
 - Estilos CSS personalizados.
+- Componentes de React Bootstrap.
 
 El diseño responsive se realiza principalmente utilizando las clases de **Bootstrap**.
+
+También se utiliza **React Bootstrap** mediante componentes como `Button`.
 
 ---
 
@@ -195,11 +248,43 @@ De esta manera, la aplicación puede adaptarse a computadoras, tablets y disposi
 - **React Bootstrap**
 - **Bootstrap**
 - **Bootstrap Icons**
+- **React Router**
 - **CSS3**
 - **styled-components**
+- **MySQL / MariaDB**
 - **Git**
 - **GitHub**
 - **Vercel**
+
+---
+
+## 🗄️ Base de Datos
+
+Se preparó una base de datos utilizando **MySQL / MariaDB** para almacenar la información del gestor de torneos.
+
+La base de datos se llama:
+
+```text
+gestor_torneos
+```
+
+Cuenta con las siguientes tablas:
+
+- `equipos`
+- `jugadores`
+- `partidos`
+
+Las tablas se encuentran relacionadas mediante claves foráneas.
+
+La estructura de la base de datos se encuentra en:
+
+```text
+base-datos/gestor_torneos.sql
+```
+
+La base de datos contiene datos de ejemplo para mostrar la estructura y las relaciones entre las tablas.
+
+Actualmente la base de datos se encuentra preparada, pero **todavía no está conectada con la aplicación React**.
 
 ---
 
@@ -287,9 +372,13 @@ gestor-torneos-futbol-frontend/
 │       ├── fondoJugadores.png
 │       ├── fondoPartidos.png
 │       ├── logoMejorado.png
+│       ├── inicio.png
 │       ├── equipos.png
 │       ├── jugadores.png
 │       └── partidos.png
+│
+├── base-datos/
+│   └── gestor_torneos.sql
 │
 ├── src/
 │   ├── components/
@@ -298,6 +387,7 @@ gestor-torneos-futbol-frontend/
 │   │   ├── BotonAgregar.jsx
 │   │   ├── BotonEditar.jsx
 │   │   ├── BotonEliminar.jsx
+│   │   ├── FooterCard.jsx
 │   │   └── LogoTexto.jsx
 │   │
 │   ├── pages/
@@ -306,6 +396,9 @@ gestor-torneos-futbol-frontend/
 │   │   ├── Jugadores.jsx
 │   │   └── Partidos.jsx
 │   │
+│   ├── routes/
+│   │   └── AppRoutes.jsx
+│   │
 │   ├── App.jsx
 │   ├── App.css
 │   └── main.jsx
@@ -313,6 +406,7 @@ gestor-torneos-futbol-frontend/
 ├── .oxlintrc.json
 ├── index.html
 ├── package.json
+├── package-lock.json
 ├── vite.config.js
 └── README.md
 ```
@@ -353,7 +447,6 @@ npm run build
   https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend
 
 - **Proyecto desplegado:**  
-  Vercel
   https://gestor-torneos-futbol-frontend.vercel.app/
 
 ---
