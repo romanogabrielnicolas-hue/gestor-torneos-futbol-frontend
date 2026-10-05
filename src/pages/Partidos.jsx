@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
@@ -303,10 +304,10 @@ function Partidos() {
         </div>
       </section>
       <div className="text-center py-4">
-        <Link to="/" className="btn btn-light shadow-sm fw-bold">
+        <Button as={Link} to="/" variant="light" className="shadow-sm fw-bold">
           <i className="bi bi-house-fill me-2"></i>
           Volver a Inicio
-        </Link>
+        </Button>
       </div>
     </main>
   );
