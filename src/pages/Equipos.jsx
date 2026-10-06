@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import BotonEliminar from "../components/BotonEliminar";
@@ -11,6 +11,9 @@ function Equipos() {
   const [equipos, setEquipos] = useState([]);
   const [editandoId, setEditandoId] = useState(null);
 
+  useEffect(() => {
+    console.log("la lista de equipos cambio", equipos);
+  }, [equipos]);
   // Agregar un equipo
   function agregarEquipo() {
     if (nombre.trim() === "") {
