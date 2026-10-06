@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import BotonEditar from "../components/BotonEditar";
@@ -15,6 +15,9 @@ function Partidos() {
   const [contadorId, setContadorId] = useState(1);
   const [editandoId, setEditandoId] = useState(null);
 
+  useEffect(() => {
+    console.log("La lista de partidos cambio", partidos);
+  }, [partidos]);
   // Agregar partido
   function agregarPartido() {
     if (
