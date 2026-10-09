@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import ConfirmacionEliminar from "../components/ConfirmacionEliminar";
 import Button from "react-bootstrap/Button";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonEditar from "../components/BotonEditar";
@@ -10,10 +12,36 @@ function Equipos() {
   const [color, setColor] = useState("#008000");
   const [equipos, setEquipos] = useState([]);
   const [editandoId, setEditandoId] = useState(null);
+  const [confirmacionEliminar, setConfirmacionEliminar] = useState({
+    mostrar: false,
+    id: null,
+  });
+  function solicitarEliminar(id) {
+    setConfirmacionEliminar({
+      mostrar: true,
+      id: id,
+    });
+  }
 
+  function cancelarEliminar() {
+    setConfirmacionEliminar({
+      mostrar: false,
+      id: null,
+    });
+  }
+
+  // Obtener los equipos de la base de datos
   useEffect(() => {
-    console.log("la lista de equipos cambio", equipos);
-  }, [equipos]);
+    axios
+      .get("http://localhost:5136/api/equipos")
+      .then((respuesta) => {
+        setEquipos(respuesta.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los equipos:", error);
+      });
+  }, []);
+
   // Agregar un equipo
   function agregarEquipo() {
     if (nombre.trim() === "") {
@@ -22,15 +50,21 @@ function Equipos() {
     }
 
     const nuevoEquipo = {
-      id: Date.now(),
       nombre: nombre,
       color: color,
     };
 
-    setEquipos([...equipos, nuevoEquipo]);
+    axios
+      .post("http://localhost:5136/api/equipos", nuevoEquipo)
+      .then((respuesta) => {
+        setEquipos([...equipos, respuesta.data]);
 
-    setNombre("");
-    setColor("#008000");
+        setNombre("");
+        setColor("#008000");
+      })
+      .catch((error) => {
+        console.error("Error al agregar el equipo:", error);
+      });
   }
 
   // Preparar un equipo para editar
@@ -47,21 +81,27 @@ function Equipos() {
       return;
     }
 
-    setEquipos(
-      equipos.map((equipo) =>
-        equipo.id === editandoId
-          ? {
-              ...equipo,
-              nombre: nombre,
-              color: color,
-            }
-          : equipo,
-      ),
-    );
+    const equipoActualizado = {
+      nombre: nombre,
+      color: color,
+    };
 
-    setNombre("");
-    setColor("#008000");
-    setEditandoId(null);
+    axios
+      .put(`http://localhost:5136/api/equipos/${editandoId}`, equipoActualizado)
+      .then((respuesta) => {
+        setEquipos(
+          equipos.map((equipo) =>
+            equipo.id === editandoId ? respuesta.data : equipo,
+          ),
+        );
+
+        setNombre("");
+        setColor("#008000");
+        setEditandoId(null);
+      })
+      .catch((error) => {
+        console.error("Error al editar el equipo:", error);
+      });
   }
 
   // Cancelar la edición
@@ -72,8 +112,26 @@ function Equipos() {
   }
 
   // Eliminar un equipo
+
   function eliminarEquipo(id) {
-    setEquipos(equipos.filter((equipo) => equipo.id !== id));
+    solicitarEliminar(id);
+  }
+
+  function confirmarEliminar() {
+    const id = confirmacionEliminar.id;
+
+    axios
+      .delete(`http://localhost:5136/api/equipos/${id}`)
+      .then(() => {
+        setEquipos((anteriores) =>
+          anteriores.filter((equipo) => equipo.id !== id),
+        );
+        cancelarEliminar();
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el equipo:", error);
+        alert("No se pudo eliminar el equipo.");
+      });
   }
 
   return (
@@ -223,12 +281,21 @@ function Equipos() {
         </div>
       </section>
 
+      {/* Botón volver */}
       <div className="text-center py-4">
         <Button as={Link} to="/" variant="light" className="shadow-sm fw-bold">
           <i className="bi bi-house-fill me-2"></i>
           Volver a Inicio
         </Button>
       </div>
+
+      <ConfirmacionEliminar
+        show={confirmacionEliminar.mostrar}
+        titulo="¿Eliminar elemento?"
+        mensaje="Esta acción no se puede deshacer. ¿Estás seguro?"
+        onCancel={cancelarEliminar}
+        onConfirm={confirmarEliminar}
+      />
     </main>
   );
 }

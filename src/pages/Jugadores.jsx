@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import ConfirmacionEliminar from "../components/ConfirmacionEliminar";
 import Button from "react-bootstrap/Button";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
@@ -14,13 +16,37 @@ function Jugadores() {
   const [numero, setNumero] = useState("");
 
   const [jugadores, setJugadores] = useState([]);
+  const [equipos, setEquipos] = useState([]);
   const [contadorId, setContadorId] = useState(1);
   const [editandoId, setEditandoId] = useState(null);
+  const [confirmacionEliminar, setConfirmacionEliminar] = useState({
+    mostrar: false,
+    id: null,
+  });
 
   useEffect(() => {
-    console.log("La lista de jugadores cambió", jugadores);
-  }, [jugadores]);
+    axios
+      .get("http://localhost:5136/api/jugadores")
+      .then((respuesta) => {
+        setJugadores(respuesta.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los jugadores:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5136/api/equipos")
+      .then((respuesta) => {
+        setEquipos(respuesta.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los equipos:", error);
+      });
+  }, []);
   // Agregar jugador
+
   function agregarJugador() {
     if (
       nombre.trim() === "" ||
@@ -35,29 +61,33 @@ function Jugadores() {
     }
 
     const nuevoJugador = {
-      id: contadorId,
       nombre: nombre,
       dni: dni,
-      edad: edad,
+      edad: Number(edad),
       posicion: posicion,
-      equipo: equipo,
-      numero: numero,
+      equipoId: Number(equipo),
+      numero: Number(numero),
     };
 
-    setJugadores([...jugadores, nuevoJugador]);
-    setContadorId(contadorId + 1);
-
-    limpiarFormulario();
+    axios
+      .post("http://localhost:5136/api/jugadores", nuevoJugador)
+      .then((respuesta) => {
+        setJugadores([...jugadores, respuesta.data]);
+        limpiarFormulario();
+      })
+      .catch((error) => {
+        console.error("Error al agregar el jugador:", error);
+      });
   }
 
   // Preparar jugador para editar
   function editarJugador(jugador) {
     setNombre(jugador.nombre);
     setDni(jugador.dni);
-    setEdad(jugador.edad);
+    setEdad(String(jugador.edad));
     setPosicion(jugador.posicion);
-    setEquipo(jugador.equipo);
-    setNumero(jugador.numero);
+    setEquipo(String(jugador.equipoId ?? ""));
+    setNumero(String(jugador.numero));
 
     setEditandoId(jugador.id);
   }
@@ -76,26 +106,33 @@ function Jugadores() {
       return;
     }
 
-    const jugadoresActualizados = jugadores.map((jugador) => {
-      if (jugador.id === editandoId) {
-        return {
-          id: jugador.id,
-          nombre: nombre,
-          dni: dni,
-          edad: edad,
-          posicion: posicion,
-          equipo: equipo,
-          numero: numero,
-        };
-      }
+    const jugadorActualizado = {
+      nombre: nombre,
+      dni: dni,
+      edad: Number(edad),
+      posicion: posicion,
+      equipoId: Number(equipo),
+      numero: Number(numero),
+    };
 
-      return jugador;
-    });
+    axios
+      .put(
+        `http://localhost:5136/api/jugadores/${editandoId}`,
+        jugadorActualizado,
+      )
+      .then((respuesta) => {
+        setJugadores(
+          jugadores.map((jugador) =>
+            jugador.id === editandoId ? respuesta.data : jugador,
+          ),
+        );
 
-    setJugadores(jugadoresActualizados);
-
-    limpiarFormulario();
-    setEditandoId(null);
+        limpiarFormulario();
+        setEditandoId(null);
+      })
+      .catch((error) => {
+        console.error("Error al editar el jugador:", error);
+      });
   }
 
   // Cancelar edición
@@ -105,8 +142,36 @@ function Jugadores() {
   }
 
   // Eliminar jugador
+
   function eliminarJugador(id) {
-    setJugadores(jugadores.filter((jugador) => jugador.id !== id));
+    setConfirmacionEliminar({
+      mostrar: true,
+      id: id,
+    });
+  }
+
+  function cancelarEliminar() {
+    setConfirmacionEliminar({
+      mostrar: false,
+      id: null,
+    });
+  }
+
+  function confirmarEliminar() {
+    const id = confirmacionEliminar.id;
+
+    axios
+      .delete(`http://localhost:5136/api/jugadores/${id}`)
+      .then(() => {
+        setJugadores((anteriores) =>
+          anteriores.filter((jugador) => jugador.id !== id),
+        );
+        cancelarEliminar();
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el jugador:", error);
+        alert("No se pudo eliminar el jugador.");
+      });
   }
 
   // Limpiar formulario
@@ -227,9 +292,11 @@ function Jugadores() {
                 >
                   <option value="">Seleccione un equipo</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipo) => (
+                    <option key={equipo.id} value={equipo.id}>
+                      {equipo.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -305,7 +372,11 @@ function Jugadores() {
                       <td>{jugador.dni}</td>
                       <td>{jugador.edad}</td>
                       <td>{jugador.posicion}</td>
-                      <td>{jugador.equipo}</td>
+                      <td>
+                        {equipos.find(
+                          (equipo) => equipo.id === jugador.equipoId,
+                        )?.nombre || "Sin equipo"}
+                      </td>
                       <td>{jugador.numero}</td>
 
                       <td>
@@ -331,6 +402,14 @@ function Jugadores() {
           Volver a Inicio
         </Button>
       </div>
+
+      <ConfirmacionEliminar
+        show={confirmacionEliminar.mostrar}
+        titulo="¿Eliminar jugador?"
+        mensaje="¿Estás seguro de que querés eliminar este jugador? Esta acción no se puede deshacer."
+        onCancel={cancelarEliminar}
+        onConfirm={confirmarEliminar}
+      />
     </main>
   );
 }

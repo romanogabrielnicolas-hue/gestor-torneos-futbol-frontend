@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import ConfirmacionEliminar from "../components/ConfirmacionEliminar";
 import Button from "react-bootstrap/Button";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
+
+const API_PARTIDOS = "http://localhost:5136/api/partidos";
+const API_EQUIPOS = "http://localhost:5136/api/equipos";
+
 function Partidos() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
@@ -12,14 +18,53 @@ function Partidos() {
   const [equipoVisitante, setEquipoVisitante] = useState("");
 
   const [partidos, setPartidos] = useState([]);
-  const [contadorId, setContadorId] = useState(1);
+  const [equipos, setEquipos] = useState([]);
   const [editandoId, setEditandoId] = useState(null);
+  const [confirmacionEliminar, setConfirmacionEliminar] = useState({
+    mostrar: false,
+    id: null,
+  });
 
+  function solicitarEliminar(id) {
+    setConfirmacionEliminar({ mostrar: true, id });
+  }
+
+  function cancelarEliminar() {
+    setConfirmacionEliminar({ mostrar: false, id: null });
+  }
+
+  // Cargar partidos y equipos desde la API
   useEffect(() => {
-    console.log("La lista de partidos cambio", partidos);
-  }, [partidos]);
-  // Agregar partido
-  function agregarPartido() {
+    axios
+      .get(API_PARTIDOS)
+      .then((respuesta) => {
+        setPartidos(respuesta.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar los partidos:", error);
+      });
+
+    axios
+      .get(API_EQUIPOS)
+      .then((respuesta) => {
+        setEquipos(respuesta.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar los equipos:", error);
+      });
+  }, []);
+
+  // Limpiar formulario
+  function limpiarFormulario() {
+    setFecha("");
+    setHora("");
+    setCancha("");
+    setEquipoLocal("");
+    setEquipoVisitante("");
+  }
+
+  // Validar formulario
+  function validarFormulario() {
     if (
       fecha === "" ||
       hora === "" ||
@@ -28,77 +73,74 @@ function Partidos() {
       equipoVisitante === ""
     ) {
       alert("Complete todos los campos");
-      return;
+      return false;
     }
 
     if (equipoLocal === equipoVisitante) {
       alert("El equipo local y visitante no pueden ser iguales");
-      return;
+      return false;
     }
 
-    const nuevoPartido = {
-      id: contadorId,
-      fecha: fecha,
-      hora: hora,
-      cancha: cancha,
-      equipoLocal: equipoLocal,
-      equipoVisitante: equipoVisitante,
+    return true;
+  }
+
+  // Preparar datos para enviar al backend
+  function obtenerDatosPartido() {
+    return {
+      fecha,
+      hora: `${hora}:00`,
+      cancha: cancha.trim(),
+      equipoLocalId: Number(equipoLocal),
+      equipoVisitanteId: Number(equipoVisitante),
     };
+  }
 
-    setPartidos([...partidos, nuevoPartido]);
-    setContadorId(contadorId + 1);
+  // Agregar partido
+  function agregarPartido() {
+    if (!validarFormulario()) return;
 
-    limpiarFormulario();
+    axios
+      .post(API_PARTIDOS, obtenerDatosPartido())
+      .then((respuesta) => {
+        setPartidos((anteriores) => [...anteriores, respuesta.data]);
+        limpiarFormulario();
+      })
+      .catch((error) => {
+        console.error("Error al agregar el partido:", error);
+        alert("No se pudo agregar el partido.");
+      });
   }
 
   // Preparar partido para editar
   function editarPartido(partido) {
-    setFecha(partido.fecha);
-    setHora(partido.hora);
+    setFecha(partido.fecha.substring(0, 10));
+    setHora(partido.hora.substring(0, 5));
     setCancha(partido.cancha);
-    setEquipoLocal(partido.equipoLocal);
-    setEquipoVisitante(partido.equipoVisitante);
-
+    setEquipoLocal(String(partido.equipoLocalId));
+    setEquipoVisitante(String(partido.equipoVisitanteId));
     setEditandoId(partido.id);
   }
 
   // Guardar cambios
   function guardarCambios() {
-    if (
-      fecha === "" ||
-      hora === "" ||
-      cancha.trim() === "" ||
-      equipoLocal === "" ||
-      equipoVisitante === ""
-    ) {
-      alert("Complete todos los campos");
-      return;
-    }
+    if (!validarFormulario()) return;
 
-    if (equipoLocal === equipoVisitante) {
-      alert("El equipo local y visitante no pueden ser iguales");
-      return;
-    }
+    axios
+      .put(`${API_PARTIDOS}/${editandoId}`, obtenerDatosPartido())
+      .then((respuesta) => {
+        setPartidos((anteriores) =>
+          anteriores.map((partido) =>
+            partido.id === editandoId ? respuesta.data : partido,
+          ),
+        );
 
-    const partidosActualizados = partidos.map((partido) => {
-      if (partido.id === editandoId) {
-        return {
-          id: partido.id,
-          fecha: fecha,
-          hora: hora,
-          cancha: cancha,
-          equipoLocal: equipoLocal,
-          equipoVisitante: equipoVisitante,
-        };
-      }
-
-      return partido;
-    });
-
-    setPartidos(partidosActualizados);
-
-    limpiarFormulario();
-    setEditandoId(null);
+        limpiarFormulario();
+        setEditandoId(null);
+      })
+      .catch((error) => {
+        console.error("Error al editar el partido:", error);
+        alert("No se pudo editar el partido.");
+      });
   }
 
   // Cancelar edición
@@ -108,17 +150,38 @@ function Partidos() {
   }
 
   // Eliminar partido
+
   function eliminarPartido(id) {
-    setPartidos(partidos.filter((partido) => partido.id !== id));
+    solicitarEliminar(id);
   }
 
-  // Limpiar formulario
-  function limpiarFormulario() {
-    setFecha("");
-    setHora("");
-    setCancha("");
-    setEquipoLocal("");
-    setEquipoVisitante("");
+  function confirmarEliminar() {
+    const id = confirmacionEliminar.id;
+
+    axios
+      .delete(`${API_PARTIDOS}/${id}`)
+      .then(() => {
+        setPartidos((anteriores) =>
+          anteriores.filter((partido) => partido.id !== id),
+        );
+
+        if (editandoId === id) {
+          cancelarEdicion();
+        }
+
+        cancelarEliminar();
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el partido:", error);
+        alert("No se pudo eliminar el partido.");
+      });
+  }
+
+  // Mostrar el nombre del equipo a partir de su ID
+  function obtenerNombreEquipo(id) {
+    const equipo = equipos.find((equipo) => equipo.id === Number(id));
+
+    return equipo ? equipo.nombre : "Sin equipo";
   }
 
   return (
@@ -206,9 +269,11 @@ function Partidos() {
                 >
                   <option value="">Seleccione el equipo local</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipo) => (
+                    <option key={equipo.id} value={equipo.id}>
+                      {equipo.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -223,9 +288,11 @@ function Partidos() {
                 >
                   <option value="">Seleccione el equipo visitante</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipo) => (
+                    <option key={equipo.id} value={equipo.id}>
+                      {equipo.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -283,11 +350,11 @@ function Partidos() {
                   {partidos.map((partido) => (
                     <tr key={partido.id}>
                       <td>{partido.id}</td>
-                      <td>{partido.fecha}</td>
-                      <td>{partido.hora}</td>
+                      <td>{partido.fecha.substring(0, 10)}</td>
+                      <td>{partido.hora.substring(0, 5)}</td>
                       <td>{partido.cancha}</td>
-                      <td>{partido.equipoLocal}</td>
-                      <td>{partido.equipoVisitante}</td>
+                      <td>{obtenerNombreEquipo(partido.equipoLocalId)}</td>
+                      <td>{obtenerNombreEquipo(partido.equipoVisitanteId)}</td>
 
                       <td>
                         <div className="d-flex align-items-center gap-2">
@@ -306,12 +373,21 @@ function Partidos() {
           </div>
         </div>
       </section>
+
       <div className="text-center py-4">
         <Button as={Link} to="/" variant="light" className="shadow-sm fw-bold">
           <i className="bi bi-house-fill me-2"></i>
           Volver a Inicio
         </Button>
       </div>
+
+      <ConfirmacionEliminar
+        show={confirmacionEliminar.mostrar}
+        titulo="¿Eliminar partido?"
+        mensaje="¿Estás seguro de que querés eliminar este partido? Esta acción no se puede deshacer."
+        onCancel={cancelarEliminar}
+        onConfirm={confirmarEliminar}
+      />
     </main>
   );
 }
