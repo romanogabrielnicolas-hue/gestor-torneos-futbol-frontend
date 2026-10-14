@@ -1,25 +1,67 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+import Swal from "sweetalert2";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
+const API_URL = import.meta.env.VITE_PARTIDOS_API_URL;
 function Partidos() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [cancha, setCancha] = useState("");
   const [equipoLocal, setEquipoLocal] = useState("");
   const [equipoVisitante, setEquipoVisitante] = useState("");
+  const [equipos, setEquipos] = useState([]);
 
   const [partidos, setPartidos] = useState([]);
-  const [contadorId, setContadorId] = useState(1);
   const [editandoId, setEditandoId] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    console.log("La lista de partidos cambio", partidos);
-  }, [partidos]);
+    async function cargarPartidos() {
+      try {
+        const respuesta = await axios.get(API_URL);
+        setPartidos(respuesta.data);
+      } catch (error) {
+        console.error("Error al cargar los partidos:", error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudieron cargar los partidos.",
+        });
+      } finally {
+        setCargando(false);
+      }
+    }
+
+    cargarPartidos();
+  }, []);
+
+  useEffect(() => {
+    async function cargarEquipos() {
+      try {
+        const respuesta = await axios.get(import.meta.env.VITE_EQUIPOS_API_URL);
+
+        setEquipos(respuesta.data);
+      } catch (error) {
+        console.error("Error al cargar los equipos:", error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudieron cargar los equipos.",
+        });
+      }
+    }
+
+    cargarEquipos();
+  }, []);
   // Agregar partido
-  function agregarPartido() {
+
+  async function agregarPartido() {
     if (
       fecha === "" ||
       hora === "" ||
@@ -27,28 +69,51 @@ function Partidos() {
       equipoLocal === "" ||
       equipoVisitante === ""
     ) {
-      alert("Complete todos los campos");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Complete todos los campos.",
+      });
       return;
     }
 
     if (equipoLocal === equipoVisitante) {
-      alert("El equipo local y visitante no pueden ser iguales");
+      Swal.fire({
+        icon: "warning",
+        title: "Equipos iguales",
+        text: "El equipo local y visitante no pueden ser iguales.",
+      });
       return;
     }
 
     const nuevoPartido = {
-      id: contadorId,
-      fecha: fecha,
-      hora: hora,
-      cancha: cancha,
-      equipoLocal: equipoLocal,
-      equipoVisitante: equipoVisitante,
+      fecha,
+      hora,
+      cancha,
+      equipoLocal,
+      equipoVisitante,
     };
 
-    setPartidos([...partidos, nuevoPartido]);
-    setContadorId(contadorId + 1);
+    try {
+      const respuesta = await axios.post(API_URL, nuevoPartido);
 
-    limpiarFormulario();
+      setPartidos([...partidos, respuesta.data]);
+      limpiarFormulario();
+
+      Swal.fire({
+        icon: "success",
+        title: "Partido agregado",
+        text: "El partido se guardó correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al agregar el partido:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo guardar el partido.",
+      });
+    }
   }
 
   // Preparar partido para editar
@@ -63,7 +128,8 @@ function Partidos() {
   }
 
   // Guardar cambios
-  function guardarCambios() {
+
+  async function guardarCambios() {
     if (
       fecha === "" ||
       hora === "" ||
@@ -71,34 +137,60 @@ function Partidos() {
       equipoLocal === "" ||
       equipoVisitante === ""
     ) {
-      alert("Complete todos los campos");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Complete todos los campos.",
+      });
       return;
     }
 
     if (equipoLocal === equipoVisitante) {
-      alert("El equipo local y visitante no pueden ser iguales");
+      Swal.fire({
+        icon: "warning",
+        title: "Equipos iguales",
+        text: "El equipo local y visitante no pueden ser iguales.",
+      });
       return;
     }
 
-    const partidosActualizados = partidos.map((partido) => {
-      if (partido.id === editandoId) {
-        return {
-          id: partido.id,
-          fecha: fecha,
-          hora: hora,
-          cancha: cancha,
-          equipoLocal: equipoLocal,
-          equipoVisitante: equipoVisitante,
-        };
-      }
+    const partidoActualizado = {
+      fecha,
+      hora,
+      cancha,
+      equipoLocal,
+      equipoVisitante,
+    };
 
-      return partido;
-    });
+    try {
+      const respuesta = await axios.put(
+        `${API_URL}/${editandoId}`,
+        partidoActualizado,
+      );
 
-    setPartidos(partidosActualizados);
+      setPartidos(
+        partidos.map((partido) =>
+          String(partido.id) === String(editandoId) ? respuesta.data : partido,
+        ),
+      );
 
-    limpiarFormulario();
-    setEditandoId(null);
+      limpiarFormulario();
+      setEditandoId(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Partido actualizado",
+        text: "Los cambios se guardaron correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al editar el partido:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo actualizar el partido.",
+      });
+    }
   }
 
   // Cancelar edición
@@ -108,8 +200,42 @@ function Partidos() {
   }
 
   // Eliminar partido
-  function eliminarPartido(id) {
-    setPartidos(partidos.filter((partido) => partido.id !== id));
+
+  async function eliminarPartido(id) {
+    const resultado = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#198754",
+      cancelButtonColor: "#6c757d",
+    });
+
+    if (!resultado.isConfirmed) return;
+
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+
+      setPartidos(
+        partidos.filter((partido) => String(partido.id) !== String(id)),
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "Partido eliminado",
+        text: "El partido se eliminó correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al eliminar el partido:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar el partido.",
+      });
+    }
   }
 
   // Limpiar formulario
@@ -121,6 +247,9 @@ function Partidos() {
     setEquipoVisitante("");
   }
 
+  if (cargando) {
+    return <p className="text-center mt-4">Cargando partidos...</p>;
+  }
   return (
     <main className="fondo-pagina fondo-partidos">
       {/* Encabezado */}
@@ -206,9 +335,11 @@ function Partidos() {
                 >
                   <option value="">Seleccione el equipo local</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipo, indice) => (
+                    <option key={equipo.id} value={equipo.nombre}>
+                      {indice + 1} - {equipo.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -223,9 +354,11 @@ function Partidos() {
                 >
                   <option value="">Seleccione el equipo visitante</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipo, indice) => (
+                    <option key={equipo.id} value={equipo.nombre}>
+                      {indice + 1} - {equipo.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -280,9 +413,9 @@ function Partidos() {
                 </thead>
 
                 <tbody>
-                  {partidos.map((partido) => (
+                  {partidos.map((partido, indice) => (
                     <tr key={partido.id}>
-                      <td>{partido.id}</td>
+                      <td>{indice + 1}</td>
                       <td>{partido.fecha}</td>
                       <td>{partido.hora}</td>
                       <td>{partido.cancha}</td>
