@@ -12,9 +12,7 @@ function Inicio() {
             className="imagen-pagina"
           />
 
-          <h1 className="fw-bold text-success mt-3">
-            Gestor de Torneos
-          </h1>
+          <h1 className="fw-bold text-success mt-3">Gestor de Torneos</h1>
 
           <p className="lead text-white">
             Sistema para gestionar equipos, jugadores y partidos.
@@ -24,7 +22,6 @@ function Inicio() {
         {/* Opciones principales */}
         <section>
           <div className="row g-4">
-
             {/* Equipos */}
             <div className="col-12 col-md-4">
               <div className="card h-100 shadow tarjeta-opcion tarjeta-equipos text-center">
@@ -102,7 +99,6 @@ function Inicio() {
                 </div>
               </div>
             </div>
-
           </div>
         </section>
       </div>

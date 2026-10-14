@@ -19,155 +19,31 @@ body {
     width: 100%;
     overflow-x: hidden;
 }
+
 body {
-    margin: 0;
-    padding: 0;
     color: var(--color-texto);
     background-color: #f4f4f4;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-
+/* NAVBAR */
 .navbar-personalizada {
-    background: linear-gradient(
-        135deg,
-        #064d2c,
-        #08783d,
-        #0b5f32
-    );
-
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-
-    border-radius: 0 0 18px 18px;
+  background: linear-gradient(135deg, #064d2c, #08783d, #07552f);
+  min-height: 110px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 10;
 }
 
-/* =========================
-   LOGO DEL NAVBAR
-========================= */
-
+/* LOGO */
 .logo-navbar {
-    width: 65px;
-    height: 65px;
-    object-fit: contain;
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.4));
 }
 
-.texto-logo {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 1;
-}
 
-.texto-logo-torneos {
-    color: #8cff70;
-    font-size: 2rem;
-    font-weight: bold;
-    line-height: 1;
-}
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar-personalizada {
-    background: linear-gradient(
-        135deg,
-        #064d2c,
-        #08783d,
-        #07552f
-    );
-
-    min-height: 110px;
-
-    border-radius: 0 0 25px 25px;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.35);
-
-    position: relative;
-    z-index: 10;
-}
-
-/* Logo */
-
-.logo-navbar {
-    width: 75px;
-    height: 75px;
-
-    object-fit: contain;
-
-    filter: drop-shadow(
-        0 3px 4px rgba(0, 0, 0, 0.4)
-    );
-}
-
-/* Texto del logo */
-
-.texto-logo {
-    color: white;
-
-    font-size: 1.7rem;
-    font-weight: bold;
-
-    line-height: 1;
-}
-
-.texto-logo-torneos {
-    color: #83ff68;
-
-    font-size: 2.3rem;
-    font-weight: bold;
-
-    line-height: 1;
-
-    text-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Botones */
-
-.boton-navbar {
-    background-color: white;
-
-    color: #075c32;
-
-    border: none;
-
-    border-radius: 15px;
-
-    font-weight: bold;
-
-    font-size: 1.05rem;
-
-    padding: 12px 22px;
-
-    min-width: 145px;
-
-    box-shadow:
-        0 4px 8px rgba(0, 0, 0, 0.25);
-
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.boton-navbar:hover {
-    background-color: #e9ffe5;
-
-    color: #064d2c;
-
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 7px 14px rgba(0, 0, 0, 0.3);
-}
-
-.boton-navbar:active {
-    transform: scale(0.97);
-}
 
 /* =========================
    BIENVENIDA
@@ -250,7 +126,6 @@ body {
     transform: scale(1.03);
 }
 .fondo-inicio {
-    min-height: 100%;
     background-image:
         linear-gradient(
             rgba(0, 0, 0, 0.35),
@@ -292,21 +167,9 @@ body {
     --fondo: url("/img/fondoPartidos.png");
 }
 
-/* =========================
-   FORMULARIOS
-========================= */
-
-.formulario-personalizado {
-    border-radius: 15px;
-}
-
-/* =========================
-   TABLAS
-========================= */
-
-.tabla-personalizada {
-    border-radius: 15px;
-    overflow: hidden;
+.fondo-inicio,
+.fondo-pagina {
+    flex-grow: 1;
 }
 
 /* =========================

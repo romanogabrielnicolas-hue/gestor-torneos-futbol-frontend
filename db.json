@@ -1,0 +1,17 @@
+{
+  "equipos": [
+    {
+      "nombre": "Boca",
+      "color": "#080080",
+      "id": "-LR80LGd4vs"
+    },
+    {
+      "nombre": "river",
+      "color": "#fb092d",
+      "id": "VH1NSe0neH4"
+    }
+  ],
+  "jugadores": [],
+  "partidos": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

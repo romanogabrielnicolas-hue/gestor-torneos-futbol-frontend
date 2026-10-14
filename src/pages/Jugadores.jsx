@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+import Swal from "sweetalert2";
 import BotonEditar from "../components/BotonEditar";
 import BotonEliminar from "../components/BotonEliminar";
 import BotonAgregar from "../components/BotonAgregar";
 
+const API_URL = import.meta.env.VITE_JUGADORES_API_URL;
 function Jugadores() {
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
@@ -14,14 +17,52 @@ function Jugadores() {
   const [numero, setNumero] = useState("");
 
   const [jugadores, setJugadores] = useState([]);
-  const [contadorId, setContadorId] = useState(1);
+  const [equipos, setEquipos] = useState([]);
   const [editandoId, setEditandoId] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    console.log("La lista de jugadores cambió", jugadores);
-  }, [jugadores]);
+    async function cargarJugadores() {
+      try {
+        const respuesta = await axios.get(API_URL);
+        setJugadores(respuesta.data);
+      } catch (error) {
+        console.error("Error al cargar los jugadores:", error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudieron cargar los jugadores.",
+        });
+      } finally {
+        setCargando(false);
+      }
+    }
+
+    cargarJugadores();
+  }, []);
+
+  useEffect(() => {
+    async function cargarEquipos() {
+      try {
+        const respuesta = await axios.get(import.meta.env.VITE_EQUIPOS_API_URL);
+        setEquipos(respuesta.data);
+      } catch (error) {
+        console.error("Error al cargar los equipos:", error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudieron cargar los equipos.",
+        });
+      }
+    }
+
+    cargarEquipos();
+  }, []);
   // Agregar jugador
-  function agregarJugador() {
+
+  async function agregarJugador() {
     if (
       nombre.trim() === "" ||
       dni.trim() === "" ||
@@ -30,24 +71,43 @@ function Jugadores() {
       equipo === "" ||
       numero === ""
     ) {
-      alert("Complete todos los campos");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Complete todos los campos.",
+      });
       return;
     }
 
     const nuevoJugador = {
-      id: contadorId,
-      nombre: nombre,
-      dni: dni,
-      edad: edad,
-      posicion: posicion,
-      equipo: equipo,
-      numero: numero,
+      nombre,
+      dni,
+      edad,
+      posicion,
+      equipo,
+      numero,
     };
 
-    setJugadores([...jugadores, nuevoJugador]);
-    setContadorId(contadorId + 1);
+    try {
+      const respuesta = await axios.post(API_URL, nuevoJugador);
 
-    limpiarFormulario();
+      setJugadores([...jugadores, respuesta.data]);
+      limpiarFormulario();
+
+      Swal.fire({
+        icon: "success",
+        title: "Jugador agregado",
+        text: "El jugador se guardó correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al agregar el jugador:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo guardar el jugador.",
+      });
+    }
   }
 
   // Preparar jugador para editar
@@ -63,7 +123,8 @@ function Jugadores() {
   }
 
   // Guardar cambios
-  function guardarCambios() {
+
+  async function guardarCambios() {
     if (
       nombre.trim() === "" ||
       dni.trim() === "" ||
@@ -72,30 +133,52 @@ function Jugadores() {
       equipo === "" ||
       numero === ""
     ) {
-      alert("Complete todos los campos");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Complete todos los campos.",
+      });
       return;
     }
 
-    const jugadoresActualizados = jugadores.map((jugador) => {
-      if (jugador.id === editandoId) {
-        return {
-          id: jugador.id,
-          nombre: nombre,
-          dni: dni,
-          edad: edad,
-          posicion: posicion,
-          equipo: equipo,
-          numero: numero,
-        };
-      }
+    const jugadorActualizado = {
+      nombre,
+      dni,
+      edad,
+      posicion,
+      equipo,
+      numero,
+    };
 
-      return jugador;
-    });
+    try {
+      const respuesta = await axios.put(
+        `${API_URL}/${editandoId}`,
+        jugadorActualizado,
+      );
 
-    setJugadores(jugadoresActualizados);
+      setJugadores(
+        jugadores.map((jugador) =>
+          String(jugador.id) === String(editandoId) ? respuesta.data : jugador,
+        ),
+      );
 
-    limpiarFormulario();
-    setEditandoId(null);
+      limpiarFormulario();
+      setEditandoId(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Jugador actualizado",
+        text: "Los cambios se guardaron correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al editar el jugador:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo actualizar el jugador.",
+      });
+    }
   }
 
   // Cancelar edición
@@ -105,8 +188,42 @@ function Jugadores() {
   }
 
   // Eliminar jugador
-  function eliminarJugador(id) {
-    setJugadores(jugadores.filter((jugador) => jugador.id !== id));
+
+  async function eliminarJugador(id) {
+    const resultado = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#198754",
+      cancelButtonColor: "#6c757d",
+    });
+
+    if (!resultado.isConfirmed) return;
+
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+
+      setJugadores(
+        jugadores.filter((jugador) => String(jugador.id) !== String(id)),
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "Jugador eliminado",
+        text: "El jugador se eliminó correctamente.",
+      });
+    } catch (error) {
+      console.error("Error al eliminar el jugador:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar el jugador.",
+      });
+    }
   }
 
   // Limpiar formulario
@@ -117,6 +234,9 @@ function Jugadores() {
     setPosicion("");
     setEquipo("");
     setNumero("");
+  }
+  if (cargando) {
+    return <p className="text-center mt-4">Cargando jugadores...</p>;
   }
 
   return (
@@ -227,9 +347,11 @@ function Jugadores() {
                 >
                   <option value="">Seleccione un equipo</option>
 
-                  <option value="Equipo A">Equipo A</option>
-
-                  <option value="Equipo B">Equipo B</option>
+                  {equipos.map((equipoItem) => (
+                    <option key={equipoItem.id} value={equipoItem.nombre}>
+                      {equipoItem.nombre}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -298,9 +420,9 @@ function Jugadores() {
                 </thead>
 
                 <tbody>
-                  {jugadores.map((jugador) => (
+                  {jugadores.map((jugador, indice) => (
                     <tr key={jugador.id}>
-                      <td>{jugador.id}</td>
+                      <td>{indice + 1}</td>
                       <td>{jugador.nombre}</td>
                       <td>{jugador.dni}</td>
                       <td>{jugador.edad}</td>

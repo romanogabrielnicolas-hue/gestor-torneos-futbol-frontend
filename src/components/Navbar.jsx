@@ -1,3 +1,4 @@
+import LogoTexto from "./LogoTexto";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -12,8 +13,7 @@ function Navbar() {
           />
 
           <div className="ms-2">
-            <div className="texto-logo">Gestor de</div>
-            <div className="texto-logo-torneos">Torneos</div>
+            <LogoTexto />
           </div>
         </Link>
 
