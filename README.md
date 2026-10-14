@@ -2,17 +2,19 @@
 
 <img src="./public/img/logoMejorado.png" width="190" alt="Logo Gestor de Torneos">
 
-# Gestor de Torneos de Fútbol - Frontend
+# Gestor de Torneos de Fútbol Murak
 
-### React + Vite + React Bootstrap
+### React + Vite + React Bootstrap + Axios + JSON Server
 
-Aplicación web desarrollada con **React + Vite** como migración del proyecto anterior de gestión de torneos de fútbol.
+Aplicación web para administrar equipos, jugadores y partidos de un torneo de fútbol. Esta versión corresponde a la migración progresiva del proyecto anterior a React e incorpora componentes reutilizables, consumo de una API HTTP y diseño adaptable a dispositivos móviles.
 
 <br>
 
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Axios](https://img.shields.io/badge/Axios-671DDF?style=for-the-badge&logo=axios&logoColor=white)
+![JSON Server](https://img.shields.io/badge/JSON_Server-323330?style=for-the-badge&logo=json&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 </div>
@@ -21,15 +23,26 @@ Aplicación web desarrollada con **React + Vite** como migración del proyecto a
 
 ## 📋 Descripción
 
-Este proyecto es la versión frontend de un gestor de torneos de fútbol, desarrollado utilizando **React** y **Vite**.
+Este proyecto es una aplicación web para gestionar la información de un torneo de fútbol. Está desarrollado con **React y Vite**, y organiza la interfaz mediante páginas y componentes reutilizables.
 
-Corresponde al **Repositorio N.º 2** y consiste en la migración progresiva del proyecto anterior a React, incorporando componentes reutilizables, React Bootstrap, Bootstrap Icons, React Router y estilos personalizados.
+La aplicación consume una API HTTP utilizando **Axios**. En el entorno de desarrollo, la API se ejecuta con **JSON Server** y utiliza `db.json` como archivo de datos.
 
-La aplicación permite administrar **equipos, jugadores y partidos** mediante una interfaz visual y responsive.
+El sistema permite administrar tres recursos principales: **equipos, jugadores y partidos**.
+
+## 🌐 Demo online
+
+- **Aplicación web:** [Gestor de Torneos de Fútbol Murak](https://gestor-torneos-futbol-frontend.vercel.app/)
+- **API de equipos:** [Consultar equipos](https://gestor-torneos-futbol-frontend.onrender.com/equipos)
+- **API de jugadores:** [Consultar jugadores](https://gestor-torneos-futbol-frontend.onrender.com/jugadores)
+- **API de partidos:** [Consultar partidos](https://gestor-torneos-futbol-frontend.onrender.com/partidos)
+
+El frontend está publicado en **Vercel** y la API está publicada en **Render**.
+
+> **Importante:** esta versión está destinada a demostraciones. JSON Server utiliza el archivo `db.json`; en un servicio de alojamiento gratuito, los cambios guardados en el sistema de archivos local pueden perderse cuando la instancia se reinicia o vuelve a desplegarse. No se recomienda utilizar esta configuración para información importante o permanente.
 
 ---
 
-## 📝 Tabla de Contenido
+## 📝 Tabla de contenido
 
 - [⚽ Proyecto](#-proyecto)
 - [✨ Características](#-características)
@@ -38,151 +51,103 @@ La aplicación permite administrar **equipos, jugadores y partidos** mediante un
 - [📦 Props](#-props)
 - [🧭 Navegación](#-navegación)
 - [🎨 Diseño](#-diseño)
-- [📱 Diseño Responsive](#-diseño-responsive)
-- [🛠️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
-- [🗄️ Base de Datos](#️-base-de-datos)
+- [📱 Diseño responsive](#-diseño-responsive)
+- [🛠️ Tecnologías utilizadas](#️-tecnologías-utilizadas)
+- [🗄️ Datos y API](#️-datos-y-api)
 - [🚀 Instalación](#-instalación)
 - [💻 Uso](#-uso)
-- [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+- [📁 Estructura del proyecto](#-estructura-del-proyecto)
 - [🔎 SEO](#-seo)
-- [🌐 Deploy](#-deploy)
-- [🔗 Enlaces Importantes](#-enlaces-importantes)
+- [🌐 Despliegue](#-despliegue)
+- [🔗 Enlaces importantes](#-enlaces-importantes)
 
 ---
 
 ## ⚽ Proyecto
 
-Este proyecto corresponde al **Repositorio N.º 2** del trabajo práctico.
+Este proyecto corresponde al **Repositorio N.º 2** del trabajo práctico y consiste en la migración progresiva del gestor anterior, desarrollado con HTML, CSS y JavaScript, hacia **React + Vite**.
 
-Se realizó una migración del proyecto anterior, desarrollado con HTML, CSS y JavaScript, hacia una aplicación utilizando **React + Vite**.
-
-Durante la migración se mantuvo el diseño general del proyecto y se incorporaron nuevas funcionalidades y componentes reutilizables.
-
----
+Durante la migración se mantuvo el estilo visual general y se incorporaron componentes reutilizables, navegación entre páginas y conexión con una API HTTP.
 
 ## ✨ Características
 
 ### 🏠 Inicio
 
-Página principal del sistema con acceso visual a las diferentes funcionalidades del gestor.
-
-Desde esta sección se puede acceder a:
-
-- Gestión de Equipos.
-- Gestión de Jugadores.
-- Gestión de Partidos.
+- Página principal con acceso a las secciones de Equipos, Jugadores y Partidos.
+- Tarjetas e imágenes para acceder a las funciones del gestor.
 
 ### ⚽ Equipos
 
-- Registrar equipos.
-- Seleccionar el color del equipo.
-- Visualizar los equipos registrados.
-- Editar equipos.
-- Eliminar equipos.
-- Botón para volver al inicio.
+- Registrar equipos y seleccionar su color.
+- Consultar, editar y eliminar equipos.
+- Validar que no se repitan los nombres, ignorando diferencias entre mayúsculas y minúsculas.
+- Consultar la cantidad de jugadores de cada equipo.
+- Ver los nombres, números de camiseta y posiciones de sus jugadores.
+- Eliminar en cascada: al eliminar un equipo también se eliminan los jugadores asociados y los partidos en los que participa.
+- Actualizar las referencias de jugadores y partidos cuando se cambia el nombre del equipo.
 
 ### 👤 Jugadores
 
-- Registrar jugadores.
-- Asociar jugadores a un equipo.
-- Visualizar los jugadores registrados.
-- Editar jugadores.
-- Eliminar jugadores.
-- Botón para volver al inicio.
+- Registrar jugadores con nombre, DNI, edad, posición, equipo y número de camiseta.
+- Asociar cada jugador con un equipo.
+- Consultar, editar y eliminar jugadores.
 
 ### 📅 Partidos
 
-- Registrar partidos.
-- Seleccionar equipo local y visitante.
-- Registrar fecha, hora y cancha.
-- Visualizar los partidos registrados.
-- Editar partidos.
-- Eliminar partidos.
-- Botón para volver al inicio.
+- Registrar partidos seleccionando equipo local y equipo visitante.
+- Guardar fecha, hora y cancha.
+- Consultar, editar y eliminar partidos.
+- Validar que el equipo local y el visitante no sean el mismo.
+
+### ✅ Mensajes y validaciones
+
+- Formularios con validación de campos obligatorios.
+- Alertas de confirmación, éxito y error con SweetAlert2.
+- Manejo de estados de carga y errores en las peticiones a la API.
 
 ---
 
 ## 🧩 Componentes
 
-El proyecto utiliza componentes reutilizables para organizar mejor la aplicación.
+La aplicación utiliza componentes reutilizables para organizar la interfaz y reducir la repetición de código. Entre ellos:
 
-Entre los componentes desarrollados se encuentran:
+- `Navbar`: navegación principal.
+- `Footer`: pie de página.
+- `FooterCard`: tarjeta visual del footer, con estilos propios.
+- `LogoTexto`: texto animado del logotipo.
+- `BotonAgregar`: botón reutilizable para agregar registros.
+- `BotonEditar`: botón reutilizable para editar registros.
+- `BotonEliminar`: botón reutilizable para eliminar registros.
 
-- `Navbar`
-- `Footer`
-- `BotonAgregar`
-- `BotonEditar`
-- `BotonEliminar`
-- `LogoTexto`
-
-Los componentes de botones permiten reutilizar diferentes estilos y acciones dentro de las páginas de gestión.
-
-Los componentes también utilizan **props** para recibir información y funciones desde los componentes padres.
-
-También se utiliza `styled-components` para algunos componentes personalizados.
-
----
+Los componentes reciben información y funciones mediante **props**. Algunos componentes personalizados utilizan `styled-components`.
 
 ## 🧠 JavaScript y React
 
-Para manejar la información de la aplicación se utiliza **React Hooks**, principalmente `useState`.
+La aplicación utiliza Hooks de React, entre ellos `useState` y `useEffect`, para gestionar estados y cargar información desde la API.
 
-Se implementaron funcionalidades para:
+Se utilizan métodos de JavaScript como:
 
-- Agregar registros.
-- Editar registros.
-- Eliminar registros.
-- Actualizar información.
-- Controlar formularios.
-- Manejar la navegación entre páginas.
-- Mostrar dinámicamente los datos registrados.
+- `map()` para recorrer registros y mostrar filas de las tablas.
+- `filter()` para encontrar, filtrar o retirar registros.
+- `some()` para comprobar si ya existe un equipo con el mismo nombre.
 
-Para trabajar con los datos se utilizan métodos de JavaScript como:
-
-- `map()`
-- `filter()`
-
-El método `map()` permite recorrer las listas y generar dinámicamente los elementos de las tablas.
-
----
+Las solicitudes HTTP se realizan con Axios usando métodos como `GET`, `POST`, `PUT`, `PATCH` y `DELETE`, según la operación.
 
 ## 📦 Props
 
-El proyecto utiliza **props** para enviar información y funciones entre componentes.
+Los componentes de botones reciben propiedades para personalizar su texto y ejecutar acciones.
 
-Por ejemplo, `BotonAgregar` recibe las props:
-
-- `texto`
-- `onClick`
-
-Mientras que `BotonEditar` y `BotonEliminar` reciben:
-
-- `onClick`
-
-Ejemplo:
+Por ejemplo:
 
 ```jsx
 <BotonEliminar onClick={() => eliminarEquipo(equipo.id)} />
 ```
 
-Esto permite que los componentes de botones sean reutilizables y que cada página pueda indicar qué acción debe realizarse.
-
----
+En este caso, `onClick` permite que la página indique qué acción se ejecutará al pulsar el botón.
 
 ## 🧭 Navegación
 
-La aplicación cuenta con una barra de navegación que permite acceder a las diferentes secciones:
-
-- Inicio
-- Equipos
-- Jugadores
-- Partidos
-
-También se incorporó el botón **"Volver a Inicio"** en las páginas de gestión.
-
-La navegación se realiza utilizando **React Router**, permitiendo cambiar entre las diferentes páginas sin recargar completamente la aplicación.
-
-### Rutas principales
+La navegación entre páginas se realiza con **React Router**, sin necesidad de recargar completamente la aplicación.
 
 | Ruta         | Página    |
 | ------------ | --------- |
@@ -190,181 +155,171 @@ La navegación se realiza utilizando **React Router**, permitiendo cambiar entre
 | `/equipos`   | Equipos   |
 | `/jugadores` | Jugadores |
 | `/partidos`  | Partidos  |
+| `/NotFound`  | Error404  |
 
-Las rutas se encuentran organizadas en:
-
-```text
-src/routes/AppRoutes.jsx
-```
-
-Se utilizan componentes `Link` para realizar la navegación entre las diferentes páginas.
+Las rutas se organizan en `src/routes/AppRoutes.jsx`.
 
 ---
 
 ## 🎨 Diseño
 
-Se mantuvo parte del diseño visual del proyecto anterior y se adaptó a React.
+El diseño combina React Bootstrap, clases de Bootstrap y estilos CSS personalizados. Incluye:
 
-Se incorporaron:
-
-- Fondos personalizados.
-- Logo del proyecto.
-- Imágenes para cada sección.
-- Tarjetas.
+- Fondos e imágenes propios del proyecto.
+- Tarjetas para las secciones principales.
 - Botones personalizados.
-- Bootstrap Icons.
-- Efectos visuales.
-- Estilos CSS personalizados.
-- Componentes de React Bootstrap.
+- Iconos de Bootstrap Icons.
+- Efectos visuales y una tarjeta animada en el footer.
+- Referencias de diseño de [Uiverse](https://uiverse.io/) adaptadas para los botones y el título del navbar.
 
-El diseño responsive se realiza principalmente utilizando las clases de **Bootstrap**.
+## 📱 Diseño responsive
 
-También se utiliza **React Bootstrap** mediante componentes como `Button`.
+Se utilizan clases de Bootstrap para adaptar la interfaz a distintas pantallas, por ejemplo `col-12`, `col-md-*`, `table-responsive` e `img-fluid`.
 
----
+Se realizaron ajustes para mejorar la visualización en computadoras, tablets y dispositivos móviles.
 
-## 📱 Diseño Responsive
+## 🛠️ Tecnologías utilizadas
 
-Se utilizan clases de Bootstrap para adaptar la interfaz a diferentes tamaños de pantalla.
-
-Algunas de las clases utilizadas son:
-
-- `col-12`
-- `col-md-4`
-- `navbar-expand-lg`
-- `navbar-toggler`
-- `table-responsive`
-- `img-fluid`
-
-De esta manera, la aplicación puede adaptarse a computadoras, tablets y dispositivos móviles.
-
----
-
-## 🛠️ Tecnologías Utilizadas
-
-- **React**
-- **Vite**
-- **JavaScript**
-- **React Bootstrap**
-- **Bootstrap**
-- **Bootstrap Icons**
-- **React Router**
-- **CSS3**
-- **styled-components**
-- **MySQL / MariaDB**
-- **Git**
-- **GitHub**
-- **Vercel**
+| Tecnología                     | Uso                                                                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| React                          | Interfaz y componentes                                                                |
+| Vite                           | Servidor de desarrollo y compilación                                                  |
+| JavaScript                     | Lógica de la aplicación                                                               |
+| Axios                          | Peticiones HTTP a la API                                                              |
+| JSON Server                    | API REST de demostración                                                              |
+| `db.json`                      | Datos utilizados por JSON Server                                                      |
+| React Bootstrap                | Componentes de interfaz                                                               |
+| Bootstrap 5                    | Estilos y utilidades responsive                                                       |
+| Bootstrap Icons                | Iconografía                                                                           |
+| React Router                   | Navegación entre páginas                                                              |
+| SweetAlert2                    | Alertas y confirmaciones                                                              |
+| styled-components              | Estilos encapsulados de componentes                                                   |
+| [Uiverse](https://uiverse.io/) | Referencias de diseño utilizadas para personalizar los botones y el título del navbar |
+| CSS3                           | Estilos personalizados                                                                |
+| Git y GitHub                   | Control de versiones y repositorio                                                    |
+| Vercel                         | Despliegue del frontend                                                               |
+| Render                         | Despliegue de la API                                                                  |
 
 ---
 
-## 🗄️ Base de Datos
+## 🗄️ Datos y API
 
-Se preparó una base de datos utilizando **MySQL / MariaDB** para almacenar la información del gestor de torneos.
-
-La base de datos se llama:
-
-```text
-gestor_torneos
-```
-
-Cuenta con las siguientes tablas:
+La versión actual del gestor utiliza **JSON Server** para exponer una API HTTP. Los datos se encuentran en `db.json` y se agrupan en tres colecciones:
 
 - `equipos`
 - `jugadores`
 - `partidos`
 
-Las tablas se encuentran relacionadas mediante claves foráneas.
+### Rutas locales
 
-La estructura de la base de datos se encuentra en:
+| Recurso   | URL local                         |
+| --------- | --------------------------------- |
+| Equipos   | `http://localhost:3000/equipos`   |
+| Jugadores | `http://localhost:3000/jugadores` |
+| Partidos  | `http://localhost:3000/partidos`  |
 
-```text
-base-datos/gestor_torneos.sql
+### Operaciones HTTP
+
+- `GET`: consultar registros.
+- `POST`: agregar registros.
+- `PUT` o `PATCH`: actualizar registros.
+- `DELETE`: eliminar registros.
+
+### Base de datos SQL anterior
+
+El repositorio también conserva el archivo `base-datos/gestor_torneos.sql`, que corresponde a una estructura SQL preparada en una etapa el cual se conecte mediante el backend. **La aplicación actual no se conecta a MySQL/MariaDB**: utiliza JSON Server y `db.json`.
+
+### Variables de entorno locales
+
+Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+
+```env
+VITE_EQUIPOS_API_URL=http://localhost:3000/equipos
+VITE_JUGADORES_API_URL=http://localhost:3000/jugadores
+VITE_PARTIDOS_API_URL=http://localhost:3000/partidos
 ```
 
-La base de datos contiene datos de ejemplo para mostrar la estructura y las relaciones entre las tablas.
-
-Actualmente la base de datos se encuentra preparada, pero **todavía no está conectada con la aplicación React**.
+El archivo `.env` no debe subirse al repositorio. Se encuentra excluido por `.gitignore`.
 
 ---
 
 ## 🚀 Instalación
 
-Para ejecutar el proyecto localmente se deben seguir los siguientes pasos.
+### Requisitos
+
+- Node.js y npm.
+- Git para clonar el repositorio.
 
 ### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend.git
-```
-
-Luego ingresar a la carpeta:
-
-```bash
 cd gestor-torneos-futbol-frontend
 ```
 
-### 2. Instalar las dependencias
+### 2. Instalar dependencias
 
 ```bash
 npm install
 ```
 
-### 3. Iniciar el servidor de desarrollo
+### 3. Configurar las variables de entorno
+
+Crear el archivo `.env` en la raíz con las tres URL locales indicadas en la sección [Datos y API](#️-datos-y-api).
+
+### 4. Iniciar JSON Server
+
+En una terminal, ejecutar:
+
+```bash
+npm run api
+```
+
+La API local estará disponible en `http://localhost:3000`.
+
+### 5. Iniciar React con Vite
+
+Abrir una segunda terminal en la carpeta del proyecto y ejecutar:
 
 ```bash
 npm run dev
 ```
 
-El proyecto se ejecutará en la dirección indicada por Vite, normalmente:
+Vite indicará la URL local de la aplicación, normalmente `http://localhost:5173`.
 
-```text
-http://localhost:5173
+Para usar el sistema localmente deben permanecer activos tanto Vite como JSON Server.
+
+### 6. Crear la compilación de producción
+
+```bash
+npm run build
 ```
+
+Vite genera los archivos listos para publicar en la carpeta `dist`.
 
 ---
 
 ## 💻 Uso
 
-La aplicación permite gestionar diferentes elementos de un torneo de fútbol.
+Desde la barra de navegación se puede acceder a Inicio, Equipos, Jugadores y Partidos.
 
-### Navegación
+### Ejemplo: agregar un equipo
 
-Desde la barra de navegación se puede acceder a:
-
-- **Inicio:** página principal.
-- **Equipos:** administración de equipos.
-- **Jugadores:** administración de jugadores.
-- **Partidos:** administración de partidos.
-
-### Gestión de datos
-
-En cada sección se dispone de un formulario para agregar información y una tabla para visualizar los registros.
-
-También se pueden realizar acciones como:
-
-- Editar.
-- Eliminar.
-- Volver al inicio.
-
-### Ejemplo
-
-Para agregar un equipo:
-
-1. Ingresar a **Equipos**.
+1. Entrar en **Equipos**.
 2. Escribir el nombre del equipo.
 3. Seleccionar un color.
-4. Presionar **Agregar equipo**.
+4. Pulsar **Agregar equipo**.
 
-Para modificarlo se utiliza el botón **Editar** y para eliminarlo el botón **Eliminar**.
+Después se puede editar el registro, consultar sus jugadores o eliminarlo. La eliminación de un equipo también elimina sus jugadores y partidos asociados.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura del proyecto
 
 ```text
 gestor-torneos-futbol-frontend/
-│
+├── base-datos/
+│   └── gestor_torneos.sql
 ├── public/
 │   └── img/
 │       ├── fondo-index.png
@@ -376,37 +331,32 @@ gestor-torneos-futbol-frontend/
 │       ├── equipos.png
 │       ├── jugadores.png
 │       └── partidos.png
-│
-├── base-datos/
-│   └── gestor_torneos.sql
-│
 ├── src/
 │   ├── components/
-│   │   ├── navbar.jsx
-│   │   ├── footer.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── FooterCard.jsx
+│   │   ├── LogoTexto.jsx
 │   │   ├── BotonAgregar.jsx
 │   │   ├── BotonEditar.jsx
-│   │   ├── BotonEliminar.jsx
-│   │   ├── FooterCard.jsx
-│   │   └── LogoTexto.jsx
-│   │
+│   │   └── BotonEliminar.jsx
 │   ├── pages/
 │   │   ├── Inicio.jsx
 │   │   ├── Equipos.jsx
 │   │   ├── Jugadores.jsx
 │   │   └── Partidos.jsx
-│   │
 │   ├── routes/
 │   │   └── AppRoutes.jsx
-│   │
 │   ├── App.jsx
 │   ├── App.css
 │   └── main.jsx
-│
-├── .oxlintrc.json
+├── db.json
+├── .env                  # Crear localmente; no subir a GitHub
+├── .gitignore
 ├── index.html
 ├── package.json
 ├── package-lock.json
+├── vercel.json
 ├── vite.config.js
 └── README.md
 ```
@@ -415,39 +365,63 @@ gestor-torneos-futbol-frontend/
 
 ## 🔎 SEO
 
-Se mantienen estrategias de SEO On-Page utilizadas en el proyecto anterior.
+La página incluye elementos básicos de SEO y accesibilidad, como título de documento, meta viewport, texto alternativo en imágenes y una estructura de contenido organizada. Estos elementos pueden seguir mejorándose según las necesidades del proyecto.
 
-Entre ellas:
+## 🌐 Despliegue
 
-- Títulos descriptivos.
-- Meta descripción.
-- Meta viewport.
-- Atributos `alt` en las imágenes.
-- Uso de etiquetas semánticas.
-- Estructura organizada del contenido.
-- Diseño responsive.
+### Frontend en Vercel
 
----
+El frontend está publicado en:
 
-## 🌐 Deploy
+https://gestor-torneos-futbol-frontend.vercel.app/
 
-El proyecto fue preparado para realizar el deploy utilizando **Vercel**.
+En la configuración de Vercel deben definirse estas variables de entorno para producción, usando la URL pública de Render:
 
-También se realizaron pruebas de compilación utilizando:
-
-```bash
-npm run build
+```env
+VITE_EQUIPOS_API_URL=https://gestor-torneos-futbol-frontend.onrender.com/equipos
+VITE_JUGADORES_API_URL=https://gestor-torneos-futbol-frontend.onrender.com/jugadores
+VITE_PARTIDOS_API_URL=https://gestor-torneos-futbol-frontend.onrender.com/partidos
 ```
 
+Después de modificar las variables de entorno, se debe volver a desplegar el frontend para que Vite las incorpore en la compilación.
+
+### API en Render
+
+La API está publicada en:
+
+https://gestor-torneos-futbol-frontend.onrender.com/
+
+Rutas disponibles:
+
+- `/equipos`
+- `/jugadores`
+- `/partidos`
+
+En el plan gratuito, el servicio puede tardar en responder después de un período de inactividad. Además, JSON Server no sustituye una base de datos persistente: los cambios del archivo local pueden perderse al reiniciar o volver a desplegar el servicio.
+
+La API de demostración no implementa autenticación y es pública. No se deben cargar datos sensibles ni utilizarla como almacenamiento permanente.
+
 ---
 
-## 🔗 Enlaces Importantes
+## ✅ Comprobaciones realizadas
 
-- **Repositorio en GitHub:**  
-  https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend
+- Compilación de producción con `npm run build`.
+- Operaciones CRUD de equipos, jugadores y partidos.
+- Validación de nombres de equipos duplicados.
+- Actualización de las referencias a equipos al cambiar el nombre.
+- Eliminación en cascada de equipos y registros relacionados.
+- Consulta de jugadores por equipo.
+- Revisión visual del diseño en dispositivos móviles.
 
-- **Proyecto desplegado:**  
-  https://gestor-torneos-futbol-frontend.vercel.app/
+---
+
+## 🔗 Enlaces importantes
+
+- **Repositorio en GitHub:** [gestor-torneos-futbol-frontend](https://github.com/romanogabrielnicolas-hue/gestor-torneos-futbol-frontend)
+- **Aplicación web:** [Vercel](https://gestor-torneos-futbol-frontend.vercel.app/)
+- **API de equipos:** [Render](https://gestor-torneos-futbol-frontend.onrender.com/equipos)
+- **API de jugadores:** [Render](https://gestor-torneos-futbol-frontend.onrender.com/jugadores)
+- **API de partidos:** [Render](https://gestor-torneos-futbol-frontend.onrender.com/partidos)
 
 ---
 
