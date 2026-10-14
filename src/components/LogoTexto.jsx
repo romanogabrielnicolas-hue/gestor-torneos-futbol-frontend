@@ -24,6 +24,7 @@ const StyledWrapper = styled.div`
     font-family: Arial, sans-serif;
     font-weight: bold;
     line-height: 1;
+    white-space: nowrap;
   }
 
   .texto-fijo {

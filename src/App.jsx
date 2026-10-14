@@ -10,7 +10,7 @@ function App() {
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
 
-        <div className="flex-grow-1">
+        <div className="flex-grow-1 d-flex flex-column">
           <AppRoutes />
         </div>
 
