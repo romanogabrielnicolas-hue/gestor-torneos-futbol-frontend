@@ -170,6 +170,7 @@ El diseño combina React Bootstrap, clases de Bootstrap y estilos CSS personaliz
 - Botones personalizados.
 - Iconos de Bootstrap Icons.
 - Efectos visuales y una tarjeta animada en el footer.
+- Referencias de diseño de [Uiverse](https://uiverse.io/) adaptadas para los botones y el título del navbar.
 
 ## 📱 Diseño responsive
 
@@ -179,24 +180,25 @@ Se realizaron ajustes para mejorar la visualización en computadoras, tablets y 
 
 ## 🛠️ Tecnologías utilizadas
 
-| Tecnología        | Uso                                  |
-| ----------------- | ------------------------------------ |
-| React             | Interfaz y componentes               |
-| Vite              | Servidor de desarrollo y compilación |
-| JavaScript        | Lógica de la aplicación              |
-| Axios             | Peticiones HTTP a la API             |
-| JSON Server       | API REST de demostración             |
-| `db.json`         | Datos utilizados por JSON Server     |
-| React Bootstrap   | Componentes de interfaz              |
-| Bootstrap 5       | Estilos y utilidades responsive      |
-| Bootstrap Icons   | Iconografía                          |
-| React Router      | Navegación entre páginas             |
-| SweetAlert2       | Alertas y confirmaciones             |
-| styled-components | Estilos encapsulados de componentes  |
-| CSS3              | Estilos personalizados               |
-| Git y GitHub      | Control de versiones y repositorio   |
-| Vercel            | Despliegue del frontend              |
-| Render            | Despliegue de la API                 |
+| Tecnología                     | Uso                                                                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| React                          | Interfaz y componentes                                                                |
+| Vite                           | Servidor de desarrollo y compilación                                                  |
+| JavaScript                     | Lógica de la aplicación                                                               |
+| Axios                          | Peticiones HTTP a la API                                                              |
+| JSON Server                    | API REST de demostración                                                              |
+| `db.json`                      | Datos utilizados por JSON Server                                                      |
+| React Bootstrap                | Componentes de interfaz                                                               |
+| Bootstrap 5                    | Estilos y utilidades responsive                                                       |
+| Bootstrap Icons                | Iconografía                                                                           |
+| React Router                   | Navegación entre páginas                                                              |
+| SweetAlert2                    | Alertas y confirmaciones                                                              |
+| styled-components              | Estilos encapsulados de componentes                                                   |
+| [Uiverse](https://uiverse.io/) | Referencias de diseño utilizadas para personalizar los botones y el título del navbar |
+| CSS3                           | Estilos personalizados                                                                |
+| Git y GitHub                   | Control de versiones y repositorio                                                    |
+| Vercel                         | Despliegue del frontend                                                               |
+| Render                         | Despliegue de la API                                                                  |
 
 ---
 
